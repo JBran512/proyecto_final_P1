@@ -1,4 +1,4 @@
-package com.mycompany.proyecto_final_p1.model; // Verifica que diga .model
+package com.mycompany.proyecto_final_p1.model;
 
 public class Propietario {
     //09/05/2026 By Angel Cinto - "Agregan campos necesarios para la clase Propietario"
