@@ -9,6 +9,7 @@ package com.mycompany.proyecto_final_p1.logic;
  * @author Admin
  */
 public class PagoController {
+<<<<<<< HEAD
     private String metodoPago;
     private String estadoPago;
     private String fechaPago;
@@ -73,5 +74,7 @@ public class PagoController {
         this.montoPagado = montoPagado;
     }
     
+=======
+>>>>>>> 70cd0e1f9aee7e8ea7499b430182e25d03dc001d
     
 }
