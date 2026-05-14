@@ -1,0 +1,18 @@
+# -------------------------------------------------------
+# CONFIGURACIÓN DE BASE DE DATOS — proyecto_final_P1
+# -------------------------------------------------------
+# Este archivo es una plantilla para configurar tu conexión local a MySQL.
+# Pasos:
+#   1. Copia este archivo y renómbralo a: db.properties
+#   2. Rellena los campos con tus datos locales de MySQL
+#   3. NUNCA subas el archivo db.properties a GitHub
+# -------------------------------------------------------
+
+# URL de conexión — no cambiar a menos que uses otro puerto
+db.url=jdbc:mysql://localhost:3306/proyecto_final_P1
+
+# Usuario de tu MySQL local (por defecto es root)
+db.user=root
+
+# Tu contraseña de MySQL local
+db.password=

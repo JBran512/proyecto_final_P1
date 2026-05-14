@@ -8,6 +8,7 @@ package com.mycompany.proyecto_final_p1.logic;
  *
  * @author Admin
  */
+
 public class PagoController {
 
     private String metodoPago;
