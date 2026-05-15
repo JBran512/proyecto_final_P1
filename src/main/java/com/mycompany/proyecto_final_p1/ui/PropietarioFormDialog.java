@@ -34,7 +34,7 @@ public class PropietarioFormDialog extends javax.swing.JDialog {
         lblTelefono = new javax.swing.JLabel();
         lblCorreo = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
-        txtTelfono = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
         btnGuardar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
@@ -55,6 +55,7 @@ public class PropietarioFormDialog extends javax.swing.JDialog {
         lblCorreo.setText("Correo:");
 
         btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(this::btnGuardarActionPerformed);
 
         btnCancelar.setText("Cancelar");
         btnCancelar.addActionListener(this::btnCancelarActionPerformed);
@@ -83,7 +84,7 @@ public class PropietarioFormDialog extends javax.swing.JDialog {
                                         .addComponent(btnGuardar)
                                         .addGap(18, 18, 18)
                                         .addComponent(btnCancelar))
-                                    .addComponent(txtTelfono, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(29, 29, 29)
@@ -102,7 +103,7 @@ public class PropietarioFormDialog extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblTelefono)
-                    .addComponent(txtTelfono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCorreo)
@@ -121,6 +122,47 @@ public class PropietarioFormDialog extends javax.swing.JDialog {
         // TODO add your handling code here:
         this.dispose(); // Esto cierra solo el cuadrito de registro y libera la memoria.
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        // TODO add your handling code here:
+        // 1. Recolectar los datos de los cuadros de texto
+        String nombre = txtNombre.getText().trim();
+        String telefono = txtTelefono.getText().trim();
+        String correo = txtCorreo.getText().trim();
+
+        // 2. Validar que no dejen campos vacíos (Validación básica)
+        if (nombre.isEmpty() || telefono.isEmpty() || correo.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                    "Por favor, llene todos los campos obligatorios.", 
+                    "Error de validación", 
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            return; // Detiene la ejecución para que no intente guardar vacíos
+        }
+
+        // 3. Crear el objeto Propietario con los datos (Auditoría: usamos usuario ID 1 por ahora)
+        com.mycompany.proyecto_final_p1.model.Propietario nuevoPropietario = 
+                new com.mycompany.proyecto_final_p1.model.Propietario(nombre, telefono, correo, 1);
+
+        // 4. Instanciar el DAO y mandar a guardar
+        com.mycompany.proyecto_final_p1.util.PropietarioDAO dao = 
+                new com.mycompany.proyecto_final_p1.util.PropietarioDAO();
+
+        boolean exito = dao.insertar(nuevoPropietario);
+
+        // 5. Avisar al usuario del resultado
+        if (exito) {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                    "Propietario guardado exitosamente.", 
+                    "Éxito", 
+                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
+            this.dispose(); // Cierra la ventanita de registro automáticamente
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, 
+                    "No se pudo guardar el propietario. Revise los datos o la conexión.", 
+                    "Error", 
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -168,6 +210,6 @@ public class PropietarioFormDialog extends javax.swing.JDialog {
     private javax.swing.JLabel lblTitulo;
     private javax.swing.JTextField txtCorreo;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtTelfono;
+    private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
 }

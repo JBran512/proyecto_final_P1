@@ -10,7 +10,7 @@ public class Propietario {
     private int updatedBy;
     //09/05/2026 By Angel Cinto
     // CONSTRUCTOR 1: El que recibe todo (Generado con Alt+Insert)
-    public Propietario(String nombre, String telefono, String correo) {
+    public Propietario(String nombre, String telefono, String correo, int createdBy ) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
