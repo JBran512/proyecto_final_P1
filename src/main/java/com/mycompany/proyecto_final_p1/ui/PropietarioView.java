@@ -55,6 +55,7 @@ public class PropietarioView extends javax.swing.JFrame {
         btnAnadir.addActionListener(this::btnAnadirActionPerformed);
 
         btnModificar.setText("Modificar");
+        btnModificar.addActionListener(this::btnModificarActionPerformed);
 
         btnEliminar.setText("Eliminar");
 
@@ -119,6 +120,31 @@ public class PropietarioView extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose(); // Esto cierra solo el cuadrito de registro y libera la memoria.
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+// 1. Obtener la fila que el usuario tiene seleccionada en la JTable
+    int filaSeleccionada = tblPropietarios.getSelectedRow();
+    
+    // 2. Validar que realmente haya seleccionado una fila
+    if (filaSeleccionada == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+                "Por favor, seleccione un propietario de la tabla para poder modificarlo.", 
+                "Fila no seleccionada", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+        return; // Detiene la ejecución del botón
+    }
+    
+    // 3. Extraer el ID de la fila seleccionada (Columna 0)
+    int idPropietario = (int) tblPropietarios.getValueAt(filaSeleccionada, 0);
+    
+    // 4. Abrir el formulario enviándole el ID (UNA SOLA VEZ)
+    PropietarioFormDialog ventanaEditar = new PropietarioFormDialog(this, true, idPropietario);
+    ventanaEditar.setLocationRelativeTo(this); // Centrar la ventanita
+    ventanaEditar.setVisible(true); // Mostrar la ventana
+    
+    // 5. Línea de refrescar comentada para evitar el error anterior
+    // cargarDatosTabla();
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments

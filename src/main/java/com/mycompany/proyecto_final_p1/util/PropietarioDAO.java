@@ -44,15 +44,15 @@ public class PropietarioDAO {
         System.out.println("Modificando en BD a: " + propietario.getNombre() + " con ID: " + propietario.getIdPropietario());
 
         // 2. Definir la consulta SQL (usa 'id_propietario' o 'id' según tu base de datos)
-        String sql = "UPDATE propietarios SET nombre = ?, telefono = ?, correo = ? WHERE id_propietario = ?;";
+        String sql = "UPDATE propietario SET nombre = ?, telefono = ?, correo = ? WHERE id_propietario = ?;";
 
         // NOTA DE PROGRAMACIÓN 1: 
         // Dejamos este return true provisional para simular que todo salió bien.
         // Cuando vayas a conectarlo a la base de datos real, descomenta el bloque try-catch de abajo
         // y elimina este "return true;".
-        return true;
+        //return true;
 
-        /* try (java.sql.Connection conn = tuClaseConexion.getConexion();
+         try (java.sql.Connection conn = Conexion.getConexion();
              java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, propietario.getNombre());
@@ -67,14 +67,15 @@ public class PropietarioDAO {
             System.out.println("Error al actualizar propietario: " + ex.getMessage());
             return false;
         }
-        */
+        
     }
     
     public com.mycompany.proyecto_final_p1.model.Propietario buscarPorId(int idBuscado) {
+        
     com.mycompany.proyecto_final_p1.model.Propietario propietario = null;
     
     // Consulta SQL para buscar por la llave primaria
-    String sql = "SELECT nombre, telefono, correo FROM propietarios WHERE id_propietario = ?;";
+    String sql = "SELECT nombre, telefono, correo FROM propietario WHERE id_propietario = ?;";
     
     // NOTA PARA PROGRAMACIÓN 1: 
     // Dejamos esta lógica de prueba para que compile de inmediato.
@@ -83,9 +84,9 @@ public class PropietarioDAO {
         // Simula que encontró al propietario temporalmente para llenar los campos
         propietario = new com.mycompany.proyecto_final_p1.model.Propietario("Cargando...", "", "", 1);
     }
-    return propietario;
+    //return propietario;
 
-    /* try (java.sql.Connection conn = tuClaseConexion.getConexion();
+     try (java.sql.Connection conn = Conexion.getConexion();
          java.sql.PreparedStatement ps = conn.prepareStatement(sql)) {
         
         ps.setInt(1, idBuscado);
@@ -104,6 +105,41 @@ public class PropietarioDAO {
         System.out.println("Error al buscar propietario por ID: " + ex.getMessage());
     }
     return propietario;
-    */
+    }
+    
+    public java.util.List<com.mycompany.proyecto_final_p1.model.Propietario> listarTodos() {
+    // 1. Creamos la lista vacía donde guardaremos los propietarios encontrados
+    java.util.List<com.mycompany.proyecto_final_p1.model.Propietario> lista = new java.util.ArrayList<>();
+    
+    // 2. Definimos la consulta (recuerda validar si tu tabla es 'propietario' o 'propietarios')
+    String sql = "SELECT id_propietario, nombre, telefono, correo FROM propietario;";
+    
+    // 3. Ejecutamos la conexión y la consulta dentro del try-with-resources
+    try (java.sql.Connection conn = Conexion.getConexion();
+         java.sql.PreparedStatement ps = conn.prepareStatement(sql);
+         java.sql.ResultSet rs = ps.executeQuery()) {
+        
+        // 4. El ciclo 'while' recorre CADA FILA que devolvió la base de datos
+        while (rs.next()) {
+            String nom = rs.getString("nombre");
+            String tel = rs.getString("telefono");
+            String corr = rs.getString("correo");
+            int id = rs.getInt("id_propietario");
+            
+            // Creamos un objeto Propietario por cada fila encontrada
+            com.mycompany.proyecto_final_p1.model.Propietario propietario = 
+                new com.mycompany.proyecto_final_p1.model.Propietario(nom, tel, corr, 1);
+            propietario.setIdPropietario(id);
+            
+            // ¡Paso clave! Agregamos el objeto a nuestra lista dinámica
+            lista.add(propietario);
+        }
+        
+    } catch (java.sql.SQLException ex) {
+        System.out.println("Error al listar los propietarios: " + ex.getMessage());
+    }
+    
+    // 5. Devolvemos la lista (puede ir llena o vacía si no hay registros)
+    return lista;
     }
 }
