@@ -11,15 +11,45 @@ package com.mycompany.proyecto_final_p1.ui;
 public class PropietarioFormDialog extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(PropietarioFormDialog.class.getName());
-
+    
+    // 1. Variable global de control única
+    private int idPropietarioModificar = -1; 
+    
     /**
-     * Creates new form PropietarioFormDialog
+     * CONSTRUCTOR ORIGINAL (Para nuevos registros)
      */
     public PropietarioFormDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
 
+    // ==========================================
+    // >>> Nuevo constructor para actualizar propietario <<<
+    // ==========================================
+    public PropietarioFormDialog(java.awt.Frame parent, boolean modal, int idPropietario) {
+        super(parent, modal);
+        initComponents();
+        this.idPropietarioModificar = idPropietario;
+        
+        // Cambiar títulos visuales
+        lblTitulo.setText("Modificar Propietario");
+        btnGuardar.setText("Actualizar");
+        
+        // Cargar los datos actuales en los campos de texto
+        cargarDatosParaModificar();
+    }
+
+    private void cargarDatosParaModificar() {
+        com.mycompany.proyecto_final_p1.util.PropietarioDAO dao = new com.mycompany.proyecto_final_p1.util.PropietarioDAO();
+        com.mycompany.proyecto_final_p1.model.Propietario p = dao.buscarPorId(this.idPropietarioModificar);
+        
+        if (p != null) {
+            txtNombre.setText(p.getNombre());
+            txtTelefono.setText(p.getTelefono());
+            txtCorreo.setText(p.getCorreo());
+        }
+    }
+    // ==========================================
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -53,6 +83,17 @@ public class PropietarioFormDialog extends javax.swing.JDialog {
 
         lblCorreo.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblCorreo.setText("Correo:");
+
+        txtNombre.setToolTipText("Ingrese su nombre completo");
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
+        txtTelefono.setToolTipText("Ingresar el numero de telefono en formato + [CodPaís] [Espacio en Blanco] [Número]");
+
+        txtCorreo.setToolTipText("Su correo debe contener \"@\" y \".com\"");
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
@@ -124,45 +165,95 @@ public class PropietarioFormDialog extends javax.swing.JDialog {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        // TODO add your handling code here:
-        // 1. Recolectar los datos de los cuadros de texto
-        String nombre = txtNombre.getText().trim();
-        String telefono = txtTelefono.getText().trim();
-        String correo = txtCorreo.getText().trim();
+// 1. Recolectar los datos y forzar MAYÚSCULAS en el nombre usando .toUpperCase()
+    String nombre = txtNombre.getText().trim().toUpperCase();
+    String telefono = txtTelefono.getText().trim();
+    String correo = txtCorreo.getText().trim();
 
-        // 2. Validar que no dejen campos vacíos (Validación básica)
-        if (nombre.isEmpty() || telefono.isEmpty() || correo.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                    "Por favor, llene todos los campos obligatorios.", 
-                    "Error de validación", 
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
-            return; // Detiene la ejecución para que no intente guardar vacíos
-        }
+    // Actualizamos el cuadro de texto visualmente para que el usuario vea que se cambió a mayúsculas
+    txtNombre.setText(nombre);
 
-        // 3. Crear el objeto Propietario con los datos (Auditoría: usamos usuario ID 1 por ahora)
-        com.mycompany.proyecto_final_p1.model.Propietario nuevoPropietario = 
-                new com.mycompany.proyecto_final_p1.model.Propietario(nombre, telefono, correo, 1);
+    // 2. Validar que no dejen campos vacíos
+    if (nombre.isEmpty() || telefono.isEmpty() || correo.isEmpty()) {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+                "Por favor, llene todos los campos obligatorios.", 
+                "Error de validación", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+        return; 
+    }
 
-        // 4. Instanciar el DAO y mandar a guardar
-        com.mycompany.proyecto_final_p1.util.PropietarioDAO dao = 
-                new com.mycompany.proyecto_final_p1.util.PropietarioDAO();
+    // 2.1 VALIDACIÓN DE CORREO
+    String regexCorreo = "^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}$";
+    if (!correo.matches(regexCorreo)) {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+                "El formato del correo electrónico no es válido.\nDebe incluir '@' y un dominio (ejemplo: usuario@correo.com).", 
+                "Formato Incorrecto", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        return; 
+    }
 
-        boolean exito = dao.insertar(nuevoPropietario);
+    // 2.2 VALIDACIÓN DE TELÉFONO
+    String regexTelefono = "^\\+\\d{1,3}\\s\\d{4,11}$";
+    if (!telefono.matches(regexTelefono)) {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+                "El teléfono debe cumplir con el formato internacional simplificado:\n" +
+                "+[CódigoPaís] [Espacio en Blanco] [NúmeroCompleto]\n" +
+                "Ejemplo válido: +502 45678901", 
+                "Formato Incorrecto", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+        return; 
+    }
 
-        // 5. Avisar al usuario del resultado
-        if (exito) {
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                    "Propietario guardado exitosamente.", 
-                    "Éxito", 
-                    javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            this.dispose(); // Cierra la ventanita de registro automáticamente
-        } else {
-            javax.swing.JOptionPane.showMessageDialog(this, 
-                    "No se pudo guardar el propietario. Revise los datos o la conexión.", 
-                    "Error", 
-                    javax.swing.JOptionPane.ERROR_MESSAGE);
-        }
+    // =======================================================================
+    // >>> PASO C REESTRUCTURADO (PUNTOS 3 Y 4 UNIFICADOS) <<<
+    // =======================================================================
+    
+    // 3. Crear el objeto Propietario con los datos ya limpios y validados
+    com.mycompany.proyecto_final_p1.model.Propietario propietario = 
+            new com.mycompany.proyecto_final_p1.model.Propietario(nombre, telefono, correo, 1);
+
+    // 4. Instanciar el DAO y decidir mediante IF si se inserta o se actualiza
+    com.mycompany.proyecto_final_p1.util.PropietarioDAO dao = 
+            new com.mycompany.proyecto_final_p1.util.PropietarioDAO();
+    
+    boolean exito;
+
+    if (this.idPropietarioModificar == -1) {
+        // Modo Registro: El ID se mantiene en -1 por defecto, es un registro nuevo
+        exito = dao.insertar(propietario);
+    } else {
+        // Modo Edición: Le inyectamos el ID que seleccionamos de la tabla antes de mandar al DAO
+        propietario.setIdPropietario(this.idPropietarioModificar); 
+        exito = dao.actualizar(propietario); // Ejecuta la sentencia UPDATE en la BD
+    }
+    
+    // =======================================================================
+
+    // 5. Avisar al usuario del resultado (Funciona perfectamente para ambos casos)
+    if (exito) {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+                "Propietario guardado exitosamente.", 
+                "Éxito", 
+                javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        this.dispose(); 
+    } else {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+                "No se pudo guardar el propietario. Revise los datos o la conexión.", 
+                "Error", 
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        // 1. Obtener el carácter físico que el usuario acaba de presionar
+    char caracter = evt.getKeyChar();
+    
+    // 2. Verificar si el carácter es una letra minúscula
+    if (Character.isLowerCase(caracter)) {
+        // 3. Interceptarlo y transformarlo a mayúscula antes de que aparezca en el campo
+        evt.setKeyChar(Character.toUpperCase(caracter));
+    }
+    }//GEN-LAST:event_txtNombreKeyTyped
 
     /**
      * @param args the command line arguments

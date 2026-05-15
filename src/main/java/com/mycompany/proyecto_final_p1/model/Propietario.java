@@ -8,6 +8,7 @@ public class Propietario {
     private String correo;
     private int createdBy;
     private int updatedBy;
+
     //09/05/2026 By Angel Cinto
     // CONSTRUCTOR 1: El que recibe todo (Generado con Alt+Insert)
     public Propietario(String nombre, String telefono, String correo, int createdBy ) {
