@@ -6,12 +6,15 @@ public class Propietario {
     private String nombre;
     private String telefono;
     private String correo;
+    private int createdBy;
+    private int updatedBy;
     //09/05/2026 By Angel Cinto
     // CONSTRUCTOR 1: El que recibe todo (Generado con Alt+Insert)
     public Propietario(String nombre, String telefono, String correo) {
         this.nombre = nombre;
         this.telefono = telefono;
         this.correo = correo;
+        this.createdBy = createdBy;
     }
     // CONSTRUCTOR 2: El vacío (Para procesos automáticos)
     public Propietario() {
@@ -48,5 +51,19 @@ public class Propietario {
 
     public void setCorreo(String correo) {
         this.correo = correo;
+    }
+    public int getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(int createdBy) {
+        this.createdBy = createdBy;
+    }
+    public int getUpdatedBy() {
+    return updatedBy;
+    }
+
+    public void setUpdatedBy(int updatedBy) {
+        this.updatedBy = updatedBy;
     }
 }
