@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.proyecto_final_p1.ui;
+import com.mycompany.proyecto_final_p1.util.PropietarioDAO;
 
 /**
  *
@@ -28,21 +29,125 @@ public class PropietarioView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        scpPropietarios = new javax.swing.JScrollPane();
+        tblPropietarios = new javax.swing.JTable();
+        btnAnadir = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
+        lblGestionPropietario = new javax.swing.JLabel();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        tblPropietarios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "ID", "Nombre", "Telefono", "Correo"
+            }
+        ));
+        scpPropietarios.setViewportView(tblPropietarios);
+
+        btnAnadir.setText("Añadir");
+        btnAnadir.addActionListener(this::btnAnadirActionPerformed);
+
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(this::btnModificarActionPerformed);
+
+        btnEliminar.setText("Eliminar");
+
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(this::btnSalirActionPerformed);
+
+        lblGestionPropietario.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblGestionPropietario.setText("Gestion de Propietarios");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scpPropietarios, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblGestionPropietario, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(btnAnadir, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(364, 364, 364)))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblGestionPropietario)
+                .addGap(20, 20, 20)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAnadir)
+                    .addComponent(btnModificar)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnSalir))
+                .addGap(18, 18, 18)
+                .addComponent(scpPropietarios, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnAnadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnadirActionPerformed
+        // TODO add your handling code here:
+        // Apertura ventana para agregar propietario
+        // 'this' es la ventana actual, y 'true' la hace modal (bloquea la de atrás)
+        PropietarioFormDialog dialog = new PropietarioFormDialog(new javax.swing.JFrame(), true);
+        dialog.setLocationRelativeTo(this); // Para que salga centrada
+        dialog.setVisible(true); // La mostramos
+        refrescarTabla();
+    }//GEN-LAST:event_btnAnadirActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        // TODO add your handling code here:
+        this.dispose(); // Esto cierra solo el cuadrito de registro y libera la memoria.
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+// 1. Obtener la fila que el usuario tiene seleccionada en la JTable
+    int filaSeleccionada = tblPropietarios.getSelectedRow();
+    
+    // 2. Validar que realmente haya seleccionado una fila
+    if (filaSeleccionada == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, 
+                "Por favor, seleccione un propietario de la tabla para poder modificarlo.", 
+                "Fila no seleccionada", 
+                javax.swing.JOptionPane.WARNING_MESSAGE);
+        return; // Detiene la ejecución del botón
+    }
+    
+    // 3. Extraer el ID de la fila seleccionada (Columna 0)
+    int idPropietario = (int) tblPropietarios.getValueAt(filaSeleccionada, 0);
+    
+    // 4. Abrir el formulario enviándole el ID (UNA SOLA VEZ)
+    PropietarioFormDialog ventanaEditar = new PropietarioFormDialog(this, true, idPropietario);
+    ventanaEditar.setLocationRelativeTo(this); // Centrar la ventanita
+    ventanaEditar.setVisible(true); // Mostrar la ventana
+    
+    // 5. Línea de refrescar comentada para evitar el error anterior
+    //cargarDatosTabla();
+     refrescarTabla();
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -69,6 +174,41 @@ public class PropietarioView extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new PropietarioView().setVisible(true));
     }
 
+        // Creamos una instancia global o local del DAO en la vista
+    private PropietarioDAO dao = new PropietarioDAO();
+
+    public void refrescarTabla() {
+        // 1. Llamamos al DAO para traer la lista actualizada de la base de datos
+        java.util.List<com.mycompany.proyecto_final_p1.model.Propietario> lista = dao.listarTodos();
+
+        // 2. Obtenemos el modelo de tu JTable (reemplaza 'tblPropietarios' por el nombre exacto de tu tabla)
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblPropietarios.getModel();
+
+        // 3. Limpiamos la tabla para que no se dupliquen los datos al recargar
+        modelo.setRowCount(0);
+
+        // 4. Recorremos la lista de propietarios usando un ciclo for-each
+        for (com.mycompany.proyecto_final_p1.model.Propietario p : lista) {
+
+            // Creamos la fila ordenando los datos según tus columnas: [ID, Nombre, Telefono, Correo]
+            Object[] fila = new Object[4];
+            fila[0] = p.getIdPropietario();
+            fila[1] = p.getNombre();
+            fila[2] = p.getTelefono();
+            fila[3] = p.getCorreo();
+
+            // 5. Agregamos la fila al modelo de la tabla
+            modelo.addRow(fila);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAnadir;
+    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JLabel lblGestionPropietario;
+    private javax.swing.JScrollPane scpPropietarios;
+    private javax.swing.JTable tblPropietarios;
     // End of variables declaration//GEN-END:variables
 }
