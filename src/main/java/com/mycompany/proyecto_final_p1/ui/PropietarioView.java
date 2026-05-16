@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.proyecto_final_p1.ui;
+import com.mycompany.proyecto_final_p1.util.PropietarioDAO;
 
 /**
  *
@@ -171,6 +172,34 @@ public class PropietarioView extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(() -> new PropietarioView().setVisible(true));
     }
 
+        // Creamos una instancia global o local del DAO en la vista
+    private PropietarioDAO dao = new PropietarioDAO();
+
+    public void refrescarTabla() {
+        // 1. Llamamos al DAO para traer la lista actualizada de la base de datos
+        java.util.List<com.mycompany.proyecto_final_p1.model.Propietario> lista = dao.listarTodos();
+
+        // 2. Obtenemos el modelo de tu JTable (reemplaza 'tblPropietarios' por el nombre exacto de tu tabla)
+        javax.swing.table.DefaultTableModel modelo = (javax.swing.table.DefaultTableModel) tblPropietarios.getModel();
+
+        // 3. Limpiamos la tabla para que no se dupliquen los datos al recargar
+        modelo.setRowCount(0);
+
+        // 4. Recorremos la lista de propietarios usando un ciclo for-each
+        for (com.mycompany.proyecto_final_p1.model.Propietario p : lista) {
+
+            // Creamos la fila ordenando los datos según tus columnas: [ID, Nombre, Telefono, Correo]
+            Object[] fila = new Object[4];
+            fila[0] = p.getIdPropietario();
+            fila[1] = p.getNombre();
+            fila[2] = p.getTelefono();
+            fila[3] = p.getCorreo();
+
+            // 5. Agregamos la fila al modelo de la tabla
+            modelo.addRow(fila);
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAnadir;
     private javax.swing.JButton btnEliminar;
