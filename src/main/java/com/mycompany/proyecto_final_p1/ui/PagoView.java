@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.mycompany.proyecto_final_p1.ui;
+import com.mycompany.proyecto_final_p1.util.PagoDAO;
 
 /**
  *

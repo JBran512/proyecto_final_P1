@@ -78,3 +78,15 @@ CREATE TABLE pago(
     UNIQUE KEY uk_casa_cuota (id_casa, id_cuota),
     PRIMARY KEY (id_pago)
 );
+
+CREATE TABLE cobros(
+	id_cobro INT AUTO_INCREMENT,
+    monto INT NOT NULL,
+    fechaInicio DATE NOT NULL,
+    fechaLimite DATE NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    createdBy INT NOT NULL,
+    PRIMARY KEY(id_cobro)
+);
+
+
