@@ -22,6 +22,10 @@ public class Pago {
         this.montoPagado = montoPagado;
         this.pagado = false; // por defecto false al crear
     }
+    
+    public Pago(){
+        
+    }
 
     // Getters y Setters
     public int getIdPago() {
