@@ -3,14 +3,16 @@
  */
 
 package com.mycompany.proyecto_final_p1.model;
+import com.mycompany.proyecto_final_p1.ui.LoginView;
 
 /**
  *
  * @author Admin
  */
 public class Proyecto_final_P1 {
-
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        java.awt.EventQueue.invokeLater(() -> {
+            new LoginView().setVisible(true);
+        });
     }
 }
