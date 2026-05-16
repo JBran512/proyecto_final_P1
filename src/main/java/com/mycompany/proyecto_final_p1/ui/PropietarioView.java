@@ -115,6 +115,7 @@ public class PropietarioView extends javax.swing.JFrame {
         PropietarioFormDialog dialog = new PropietarioFormDialog(new javax.swing.JFrame(), true);
         dialog.setLocationRelativeTo(this); // Para que salga centrada
         dialog.setVisible(true); // La mostramos
+        refrescarTabla();
     }//GEN-LAST:event_btnAnadirActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -144,7 +145,8 @@ public class PropietarioView extends javax.swing.JFrame {
     ventanaEditar.setVisible(true); // Mostrar la ventana
     
     // 5. Línea de refrescar comentada para evitar el error anterior
-    // cargarDatosTabla();
+    //cargarDatosTabla();
+     refrescarTabla();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
