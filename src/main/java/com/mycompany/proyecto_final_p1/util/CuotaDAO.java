@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,8 +34,11 @@ public class CuotaDAO {
                 c.setMonto(rs.getInt("monto"));
                 lista.add(c);
             }
-        } catch (SQLException e){
-            System.out.println("Error: " + e.getMessage());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                "Error al cargar las cuotas: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
         }
         return lista;
     }
@@ -50,8 +54,11 @@ public class CuotaDAO {
            ps.setInt(3, cuota.getMonto());
            ps.setInt(4, cuota.getCreatedBy());
            return ps.executeUpdate() > 0;
-       } catch (SQLException e){
-            System.out.println("Error: " + e.getMessage());
+       } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                "Error al guardar la cuota: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
         }
        return false;
     }
@@ -73,8 +80,11 @@ public class CuotaDAO {
                 c.setMonto(rs.getInt("monto"));
                 return c;
             }
-        } catch (SQLException e){
-            System.out.println("Error: " + e.getMessage());
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                "Error al obtener la cuota: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
         }
         return null;
     }
@@ -89,8 +99,11 @@ public class CuotaDAO {
             ps.setInt(2, anio);
             ResultSet rs = ps.executeQuery();
             return rs.next();
-        }catch (SQLException e){
-            System.out.println("Error: " + e.getMessage());
+        }catch (SQLException e) {
+            JOptionPane.showMessageDialog(null,
+                "Error al validar la cuota: " + e.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
