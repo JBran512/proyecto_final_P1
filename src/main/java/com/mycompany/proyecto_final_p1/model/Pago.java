@@ -12,11 +12,11 @@ public class Pago {
     private int idPago;
     private int idCasa;
     private int idCuota;
-    private double montoPagado;
+    private int montoPagado;
     private boolean pagado;
 
     // Constructor
-    public Pago(int idCasa, int idCuota, double montoPagado) {
+    public Pago(int idCasa, int idCuota, int montoPagado) {
         this.idCasa = idCasa;
         this.idCuota = idCuota;
         this.montoPagado = montoPagado;
@@ -52,11 +52,11 @@ public class Pago {
         this.idCuota = idCuota;
     }
 
-    public double getMontoPagado() {
+    public int getMontoPagado() {
         return montoPagado;
     }
 
-    public void setMontoPagado(double montoPagado) {
+    public void setMontoPagado(int montoPagado) {
         this.montoPagado = montoPagado;
     }
 
