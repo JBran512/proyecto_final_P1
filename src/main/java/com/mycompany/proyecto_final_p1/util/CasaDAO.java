@@ -71,11 +71,12 @@ public class CasaDAO {
             }
             
             PreparedStatement ps = con.prepareStatement(
-                "INSERT INTO casa (numero_casa, id_propietario, id_condominio) VALUES (?, ?, ?)"
+                "INSERT INTO casa (numero_casa, id_propietario, id_condominio, created_by) VALUES (?, ?, ?, ?)"
             );
             ps.setInt(1, casa.getNumeroCasa());
             ps.setInt(2, casa.getIdPropietario());
             ps.setInt(3, casa.getIdCondominio());
+            ps.setInt(4, casa.getCreatedBy());
             return ps.executeUpdate() > 0;
         } catch (SQLException e){
             System.out.println("Error: " + e.getMessage());
@@ -109,7 +110,7 @@ public class CasaDAO {
         try{
             Connection con = Conexion.getConexion();
             PreparedStatement ps = con.prepareStatement(
-                "SELECT * FROM casa WHERE numero_casa = ?"
+                "SELECT * FROM casa WHERE id_casa = ?"
             );
             ps.setInt(1, idCasa);
             ResultSet rs = ps.executeQuery();

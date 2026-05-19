@@ -4,6 +4,7 @@
  */
 package com.mycompany.proyecto_final_p1.ui;
 
+import com.mycompany.proyecto_final_p1.model.Sesion;
 import javax.swing.JOptionPane;
 import com.mycompany.proyecto_final_p1.util.UsuarioDAO;
 
@@ -155,11 +156,12 @@ public class LoginView extends javax.swing.JFrame {
         }
 
         UsuarioDAO dao = new UsuarioDAO();
-        boolean acceso = dao.verificarLogin(usuarioTxt, contrasenaTxt);
+        int acceso = dao.verificarLogin(usuarioTxt, contrasenaTxt);
 
-        if (acceso) {
+        if (acceso != -1) {
+            Sesion.setIdUsuario(acceso);
             JOptionPane.showMessageDialog(this,
-                "¡Bienvenido!",
+                "¡Bienvenido: " + Sesion.getNombreUsuario() + "!",
                 "Éxito",
                 JOptionPane.INFORMATION_MESSAGE);
             
