@@ -4,6 +4,8 @@
  */
 package com.mycompany.proyecto_final_p1.ui;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author umg
@@ -32,12 +34,20 @@ public class Menu extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu_Archivo = new javax.swing.JMenu();
+        jMenu_Reinicio_Clave = new javax.swing.JMenuItem();
+        jSeparator3 = new javax.swing.JPopupMenu.Separator();
+        jMenu_Salir1 = new javax.swing.JMenuItem();
         jMenu_Opciones = new javax.swing.JMenu();
         jMenu_Manto_Propietario = new javax.swing.JMenuItem();
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenu_Manto_Casa = new javax.swing.JMenuItem();
-        jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        jMenu_Salir = new javax.swing.JMenuItem();
+        jMenu_Finanzas = new javax.swing.JMenu();
+        jMenu_Registro_Pagos = new javax.swing.JMenuItem();
+        jSeparator4 = new javax.swing.JPopupMenu.Separator();
+        jMenu_Control_Cobros = new javax.swing.JMenuItem();
+        jMenu_Reportes = new javax.swing.JMenu();
+        jMenu_Casas_Morosas = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -53,7 +63,28 @@ public class Menu extends javax.swing.JFrame {
             .addGap(0, 100, Short.MAX_VALUE)
         );
 
-        jMenu_Opciones.setText("Gestion");
+        jMenu_Archivo.setText("Archivo");
+
+        jMenu_Reinicio_Clave.setText("Rinicio de Clave");
+        jMenu_Reinicio_Clave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_Reinicio_ClaveActionPerformed(evt);
+            }
+        });
+        jMenu_Archivo.add(jMenu_Reinicio_Clave);
+        jMenu_Archivo.add(jSeparator3);
+
+        jMenu_Salir1.setText("Salir");
+        jMenu_Salir1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_Salir1ActionPerformed(evt);
+            }
+        });
+        jMenu_Archivo.add(jMenu_Salir1);
+
+        jMenuBar1.add(jMenu_Archivo);
+
+        jMenu_Opciones.setText("Administración");
 
         jMenu_Manto_Propietario.setText("Propietario");
         jMenu_Manto_Propietario.addActionListener(new java.awt.event.ActionListener() {
@@ -71,17 +102,41 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         jMenu_Opciones.add(jMenu_Manto_Casa);
-        jMenu_Opciones.add(jSeparator2);
-
-        jMenu_Salir.setText("Salir");
-        jMenu_Salir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu_SalirActionPerformed(evt);
-            }
-        });
-        jMenu_Opciones.add(jMenu_Salir);
 
         jMenuBar1.add(jMenu_Opciones);
+
+        jMenu_Finanzas.setText("Finanzas");
+
+        jMenu_Registro_Pagos.setText("Registro de Pagos");
+        jMenu_Registro_Pagos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_Registro_PagosActionPerformed(evt);
+            }
+        });
+        jMenu_Finanzas.add(jMenu_Registro_Pagos);
+        jMenu_Finanzas.add(jSeparator4);
+
+        jMenu_Control_Cobros.setText("Control de Cobros");
+        jMenu_Control_Cobros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_Control_CobrosActionPerformed(evt);
+            }
+        });
+        jMenu_Finanzas.add(jMenu_Control_Cobros);
+
+        jMenuBar1.add(jMenu_Finanzas);
+
+        jMenu_Reportes.setText("Reportes");
+
+        jMenu_Casas_Morosas.setText("Casas Morosas");
+        jMenu_Casas_Morosas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_Casas_MorosasActionPerformed(evt);
+            }
+        });
+        jMenu_Reportes.add(jMenu_Casas_Morosas);
+
+        jMenuBar1.add(jMenu_Reportes);
 
         setJMenuBar(jMenuBar1);
 
@@ -104,27 +159,6 @@ public class Menu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenu_SalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_SalirActionPerformed
-        // 1. Preguntar al usuario si realmente desea cerrar sesión
-    int respuesta = javax.swing.JOptionPane.showConfirmDialog(this, 
-            "¿Está seguro que desea cerrar sesión?", 
-            "Cerrar Sesión", 
-            javax.swing.JOptionPane.YES_NO_OPTION,
-            javax.swing.JOptionPane.QUESTION_MESSAGE);
-            
-    if (respuesta == javax.swing.JOptionPane.YES_OPTION) {
-        // 2. Creamos la instancia de la pantalla de Login
-        LoginView pantallaLogin = new LoginView();
-        
-        // 3. La hacemos visible
-        pantallaLogin.setVisible(true);
-        pantallaLogin.setLocationRelativeTo(null); // Centrarla
-        
-        // 4. Cerramos (destruimos) la ventana de Menú actual
-        this.dispose();
-    }
-    }//GEN-LAST:event_jMenu_SalirActionPerformed
 
     private void jMenu_Manto_PropietarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Manto_PropietarioActionPerformed
         // 1. Creamos el objeto de la ventana. 
@@ -150,6 +184,47 @@ public class Menu extends javax.swing.JFrame {
     // La hacemos aparecer
     ventana.setVisible(true);
     }//GEN-LAST:event_jMenu_Manto_CasaActionPerformed
+
+    private void jMenu_Reinicio_ClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Reinicio_ClaveActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu_Reinicio_ClaveActionPerformed
+
+    private void jMenu_Salir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Salir1ActionPerformed
+        // 1. Mostrar el cuadro de diálogo de confirmación
+    int respuesta = JOptionPane.showConfirmDialog(
+            this, 
+            "¿Está seguro de que desea cerrar sesión?", 
+            "Confirmar Salida", 
+            JOptionPane.YES_NO_OPTION, 
+            JOptionPane.QUESTION_MESSAGE
+    );
+    
+    // 2. Si la respuesta es SÍ (YES_OPTION)
+    if (respuesta == JOptionPane.YES_OPTION) {
+        
+        // Creamos la ventana de Login
+        LoginView ventanaLogin = new LoginView();
+        
+        // La hacemos visible y la centramos
+        ventanaLogin.setVisible(true);
+        ventanaLogin.setLocationRelativeTo(null);
+        
+        // Cerramos el menú actual para liberar memoria
+        this.dispose();
+    }
+    }//GEN-LAST:event_jMenu_Salir1ActionPerformed
+
+    private void jMenu_Registro_PagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Registro_PagosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu_Registro_PagosActionPerformed
+
+    private void jMenu_Control_CobrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Control_CobrosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu_Control_CobrosActionPerformed
+
+    private void jMenu_Casas_MorosasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Casas_MorosasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu_Casas_MorosasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -178,12 +253,20 @@ public class Menu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenu_Archivo;
+    private javax.swing.JMenuItem jMenu_Casas_Morosas;
+    private javax.swing.JMenuItem jMenu_Control_Cobros;
+    private javax.swing.JMenu jMenu_Finanzas;
     private javax.swing.JMenuItem jMenu_Manto_Casa;
     private javax.swing.JMenuItem jMenu_Manto_Propietario;
     private javax.swing.JMenu jMenu_Opciones;
-    private javax.swing.JMenuItem jMenu_Salir;
+    private javax.swing.JMenuItem jMenu_Registro_Pagos;
+    private javax.swing.JMenuItem jMenu_Reinicio_Clave;
+    private javax.swing.JMenu jMenu_Reportes;
+    private javax.swing.JMenuItem jMenu_Salir1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JPopupMenu.Separator jSeparator2;
+    private javax.swing.JPopupMenu.Separator jSeparator3;
+    private javax.swing.JPopupMenu.Separator jSeparator4;
     // End of variables declaration//GEN-END:variables
 }
