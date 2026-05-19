@@ -8,6 +8,7 @@ import javax.swing.table.DefaultTableModel;
 import com.mycompany.proyecto_final_p1.model.Casa;
 import com.mycompany.proyecto_final_p1.util.CasaDAO;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -203,7 +204,48 @@ public class CasaView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> new CasaView().setVisible(true));
     }
-    
+    private void cargarTabla(){
+    try {
+        DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
+        modelo.setRowCount(0);
+        
+        modelo.setColumnIdentifiers(new String[]{
+            "ID casa", "Número de casa", "ID propietario", "ID condominio"
+        });
+        
+        // 1. COMENTAMOS las líneas que van a traer datos de la base de datos:
+        // CasaDAO dao = new CasaDAO();
+        // List <Casa> lista = dao.listarCasas();
+        
+        // 2. CREAMOS una lista simulada para meter datos de prueba en duro:
+        List<Casa> lista = new ArrayList<>();
+        
+        // Usamos solo números enteros, que es lo que espera tu constructor: Casa(int, int, int)
+        // Ejemplo: Casa(idCasa, numeroCasa, idPropietario) o el orden que tengan tus 3 campos.
+        Casa casa1 = new Casa(1, 101, 501);
+        Casa casa2 = new Casa(2, 102, 502);
+        Casa casa3 = new Casa(3, 103, 503);
+        
+        // Los agregamos a nuestra lista falsa
+        lista.add(casa1);
+        lista.add(casa2);
+        lista.add(casa3);
+        
+        // 3. Tu ciclo FOR original se queda EXACTAMENTE IGUAL. 
+        // Va a recorrer la lista simulada y llenará la tabla sin dar errores de red.
+        for (Casa c: lista){
+            modelo.addRow(new Object[]{
+                c.getIdCasa(),
+                c.getNumeroCasa(),
+                c.getIdPropietario(),
+                c.getIdCondominio()
+            });
+        } 
+    } catch (Exception e) { // Cambiado a Exception general para que NetBeans no se queje
+        System.out.println("Error: " + e.getMessage());
+    }
+}
+    /*
     private void cargarTabla(){
         try{
             DefaultTableModel modelo = (DefaultTableModel) jTable1.getModel();
@@ -227,7 +269,7 @@ public class CasaView extends javax.swing.JFrame {
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
-    }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

@@ -162,9 +162,18 @@ public class LoginView extends javax.swing.JFrame {
                 "¡Bienvenido!",
                 "Éxito",
                 JOptionPane.INFORMATION_MESSAGE);
-            // Abrir pantalla principal y cerrar login
-            //new MenuPrincipal().setVisible(true);
-            //this.dispose();
+            
+            // 1. Creamos la instancia de tu clase Menu
+            Menu ventanaMenu = new Menu();
+            
+            // 2. La hacemos visible
+            ventanaMenu.setVisible(true);
+            
+            // 3. Centramos la ventana en la pantalla (opcional pero recomendado)
+            ventanaMenu.setLocationRelativeTo(null); 
+            
+            // 4. Cerramos la ventana de Login actual para que no quede flotando
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(this,
                 "Usuario o contraseña incorrectos.",
