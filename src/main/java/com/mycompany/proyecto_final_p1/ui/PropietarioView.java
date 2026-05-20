@@ -18,6 +18,7 @@ public class PropietarioView extends javax.swing.JFrame {
      */
     public PropietarioView() {
         initComponents();
+        refrescarTabla();
     }
 
     /**

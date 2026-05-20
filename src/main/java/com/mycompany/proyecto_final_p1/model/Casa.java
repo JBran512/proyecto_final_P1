@@ -13,6 +13,7 @@ public class Casa {
     private int numeroCasa;
     private int idPropietario;
     private int idCondominio;
+    private int createdBy;
 
     // Constructor para insertar
     public Casa(int numeroCasa, int idPropietario, int idCondominio) {
@@ -56,5 +57,12 @@ public class Casa {
 
     public void setIdCondominio(int idCondominio) {
         this.idCondominio = idCondominio;
+    }
+    
+    public int getCreatedBy(){
+        return createdBy;
+    }
+    public void setCreatedBy(int createdBy){
+        this.createdBy = createdBy;
     }
 }

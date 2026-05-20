@@ -5,6 +5,7 @@
 package com.mycompany.proyecto_final_p1.ui;
 
 import com.mycompany.proyecto_final_p1.model.Casa;
+import com.mycompany.proyecto_final_p1.model.Sesion;
 import com.mycompany.proyecto_final_p1.util.CasaDAO;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -122,6 +123,7 @@ public class IngresarCasaDialog extends javax.swing.JDialog {
                 Integer.parseInt(txtIdPropietario.getText()),
                 Integer.parseInt(txtIdCondominio.getText())
             );
+            c.setCreatedBy(Sesion.getIdUsuario());
 
             CasaDAO dao = new CasaDAO();
 
