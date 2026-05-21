@@ -11,13 +11,16 @@ import java.sql.Date;
  * @author Chriss
  */
 public class Cobros {
-    private int monto;
+    private int idCobro;
+    private int idCuota;
     private Date fechaInicio;
     private Date fechaLimite;
     private int createdBy;
+    private int mes;
+    private int anio;
 
-    public Cobros(int monto, Date fechaInicio, Date fechaLimite, int createdBy) {
-        this.monto = monto;
+    public Cobros(int idCuota, Date fechaInicio, Date fechaLimite, int createdBy) {
+        this.idCuota = idCuota;
         this.fechaInicio = fechaInicio;
         this.fechaLimite = fechaLimite;
         this.createdBy = createdBy;
@@ -28,12 +31,20 @@ public class Cobros {
     
     
 
-    public int getMonto() {
-        return monto;
+    public int getIdCobro() {
+        return idCobro;
     }
 
-    public void setMonto(int monto) {
-        this.monto = monto;
+    public void setIdCobro(int idCobro) {
+        this.idCobro = idCobro;
+    }
+
+    public int getIdCuota() {
+        return idCuota;
+    }
+
+    public void setIdCuota(int idCuota) {
+        this.idCuota = idCuota;
     }
 
     public Date getFechaInicio() {
@@ -50,6 +61,22 @@ public class Cobros {
 
     public void setFechaLimite(Date fechaLimite) {
         this.fechaLimite = fechaLimite;
+    }
+    
+    public int getMes(){
+        return mes;
+    }
+    
+    public void setMes(int mes){
+        this.mes = mes;
+    }
+    
+    public int getAnio(){
+        return anio;
+    }
+    
+    public void setAnio(int anio){
+        this.anio = anio;
     }
 
     public int getCreatedBy() {

@@ -6,7 +6,15 @@ package com.mycompany.proyecto_final_p1.ui;
 import java.sql.Date;
 import com.mycompany.proyecto_final_p1.util.Conexion;
 import com.mycompany.proyecto_final_p1.model.Cobros;
+import com.mycompany.proyecto_final_p1.model.Cuota;
+import com.mycompany.proyecto_final_p1.model.Sesion;
 import com.mycompany.proyecto_final_p1.util.CobrosDAO;
+import com.mycompany.proyecto_final_p1.util.CuotaDAO;
+import com.mycompany.proyecto_final_p1.util.PagoDAO;
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -22,6 +30,7 @@ public class CobrosView extends javax.swing.JFrame {
      */
     public CobrosView() {
         initComponents();
+        cargarCuotas();
         
        /* try {
             java.sql.Connection con = Conexion.getConexion();
@@ -37,30 +46,30 @@ public class CobrosView extends javax.swing.JFrame {
     
     private boolean camposVacios() {
 
-       if(txtMonto.getText().trim().isEmpty()){
-        return true;
+        if (jComboBox1.getSelectedIndex() == -1) {
+            return true;
+        }
+
+        if (jCalendarInicio.getDate() == null) {
+            return true;
+        }
+
+        if (jCalendarLimite.getDate() == null) {
+            return true;
+        }
+
+        return false;
     }
 
-    if(jCalendarInicio.getDate() == null){
-        return true;
-    }
-
-    if(jCalendarLimite.getDate() == null){
-        return true;
-    }
-
-    return false;
-    }
-    
     private void limpiarCampos() {
 
-    txtMonto.setText("");
+        jComboBox1.setSelectedIndex(0);
 
-    jCalendarInicio.setDate(null);
+        jCalendarInicio.setDate(null);
 
-    jCalendarLimite.setDate(null);
+        jCalendarLimite.setDate(null);
 
-}
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -73,12 +82,12 @@ public class CobrosView extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtMonto = new javax.swing.JTextField();
         btnCobrar = new javax.swing.JButton();
         jCalendarInicio = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
         jCalendarLimite = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -88,14 +97,14 @@ public class CobrosView extends javax.swing.JFrame {
 
         jLabel1.setText("Cantidad:");
 
-        txtMonto.addActionListener(this::txtMontoActionPerformed);
-
         btnCobrar.setText("Cobrar");
         btnCobrar.addActionListener(this::btnCobrarActionPerformed);
 
         jLabel5.setText("Fecha inicio:");
 
         jLabel7.setText("Fecha límite");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -121,20 +130,20 @@ public class CobrosView extends javax.swing.JFrame {
                                 .addComponent(jLabel1)
                                 .addGap(24, 24, 24)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtMonto)
-                            .addComponent(jCalendarInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))))
+                            .addComponent(jCalendarInicio, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE)
+                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(142, 142, 142))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
+                .addContainerGap(29, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel1)
-                            .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5)
                             .addComponent(jCalendarInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -175,31 +184,99 @@ public class CobrosView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMontoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtMontoActionPerformed
-
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
-        if(!camposVacios()){
-            Cobros cobro = new Cobros();
-            
-         cobro.setMonto(Integer.parseInt(txtMonto.getText().trim()));
-         java.sql.Date fechaInicio = new java.sql.Date(jCalendarInicio.getDate().getTime());
-         java.sql.Date fechaLimite = new java.sql.Date(jCalendarLimite.getDate().getTime());
-         cobro.setFechaInicio(fechaInicio);
-         cobro.setFechaLimite(fechaLimite);
+        if (!camposVacios()) {
+            int indice = jComboBox1.getSelectedIndex();
+            Cuota cuotaSeleccionada = listaCuotas.get(indice);
 
-         cobro.setCreatedBy(1);
-         
-        int respuesta = ad.realizarCobro(cobro);
-        
-        if(respuesta ==1 ){
-            limpiarCampos();
-        }
-        
+            if (!validarFechas(cuotaSeleccionada)) {
+                JOptionPane.showMessageDialog(this,
+                        "Las fechas no corresponden al mes y año de la cuota seleccionada.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            try {
+                Cobros ultimoCobro = ad.obtenerUlimoCobro();
+                if (ultimoCobro != null) {
+                    int mesSiguiente = ultimoCobro.getMes() + 1;
+                    int anioSiguiente = ultimoCobro.getAnio();
+                    if (mesSiguiente == 13) {
+                        mesSiguiente = 1;
+                        anioSiguiente++;
+                    }
+                    if (cuotaSeleccionada.getMes() != mesSiguiente || cuotaSeleccionada.getAnio() != anioSiguiente) {
+                        JOptionPane.showMessageDialog(this,
+                                "Debe realizar el cobro del mes anterior primero.",
+                                "Error",
+                                JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(this, "Error validando cobros: " + ex.getMessage());
+                return;
+            }
+
+            Cobros cobro = new Cobros();
+            cobro.setIdCuota(listaCuotas.get(indice).getIdCuota());
+            java.sql.Date fechaInicio = new java.sql.Date(jCalendarInicio.getDate().getTime());
+            java.sql.Date fechaLimite = new java.sql.Date(jCalendarLimite.getDate().getTime());
+            cobro.setFechaInicio(fechaInicio);
+            cobro.setFechaLimite(fechaLimite);
+
+            cobro.setCreatedBy(Sesion.getIdUsuario());
+
+            int respuesta = ad.realizarCobro(cobro);
+
+            if (respuesta != 1) {
+                PagoDAO dao = new PagoDAO();
+                try {
+                    dao.generarPagos(respuesta);
+                } catch (SQLException ex) {
+                    System.getLogger(CobrosView.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                }
+                limpiarCampos();
+            }
+
         }
     }//GEN-LAST:event_btnCobrarActionPerformed
+    
+    private List<Cuota> listaCuotas;
+    private void cargarCuotas() {
+        try {
+            jComboBox1.removeAllItems();
+            CuotaDAO dao = new CuotaDAO();
+            listaCuotas = dao.listarCuotas();
+            for (Cuota c : listaCuotas) {
+                jComboBox1.addItem(c.getAnio() + " - " + getNombreMes(c.getMes()) + " Q." + c.getMonto());
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error cargando cuotas: " + e.getMessage());
+        }
+    }
+    
+    private boolean validarFechas(Cuota cuota) {
+        Calendar inicio = Calendar.getInstance();
+        inicio.setTime(jCalendarInicio.getDate());
 
+        Calendar limite = Calendar.getInstance();
+        limite.setTime(jCalendarLimite.getDate());
+
+        int mesInicio = inicio.get(Calendar.MONTH) + 1;
+        int anioInicio = inicio.get(Calendar.YEAR);
+        int mesLimite = limite.get(Calendar.MONTH) + 1;
+        int anioLimite = limite.get(Calendar.YEAR);
+
+        return mesInicio == cuota.getMes() && anioInicio == cuota.getAnio()
+            && mesLimite == cuota.getMes() && anioLimite == cuota.getAnio();
+    }
+    private String getNombreMes(int mes) {
+        String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                          "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+        return meses[mes - 1];
+    }
     /**
      * @param args the command line arguments
      */
@@ -229,11 +306,11 @@ public class CobrosView extends javax.swing.JFrame {
     private javax.swing.JButton btnCobrar;
     private com.toedter.calendar.JDateChooser jCalendarInicio;
     private com.toedter.calendar.JDateChooser jCalendarLimite;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtMonto;
     // End of variables declaration//GEN-END:variables
 }

@@ -197,7 +197,7 @@ public class IngresarCuotaDialog extends javax.swing.JDialog {
             this.dispose();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(this,
-                "Error al guardar la cuota: " + e.getMessage(),
+                "Error al guardar la cuota",
                 "Error",
                 JOptionPane.ERROR_MESSAGE);
         }
