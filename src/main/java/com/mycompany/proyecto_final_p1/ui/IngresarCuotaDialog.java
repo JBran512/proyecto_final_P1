@@ -47,6 +47,7 @@ public class IngresarCuotaDialog extends javax.swing.JDialog {
         jTextField1 = new javax.swing.JTextField();
         guardar = new javax.swing.JButton();
         cancelar = new javax.swing.JButton();
+        btnestadocuenta = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -66,15 +67,18 @@ public class IngresarCuotaDialog extends javax.swing.JDialog {
         cancelar.setText("CANCELAR");
         cancelar.addActionListener(this::cancelarActionPerformed);
 
+        btnestadocuenta.setText("Estado de Cuenta");
+        btnestadocuenta.addActionListener(this::btnestadocuentaActionPerformed);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(34, 34, 34)
-                .addComponent(jLabel1)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
                         .addGap(51, 51, 51)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(60, 60, 60)
@@ -84,7 +88,8 @@ public class IngresarCuotaDialog extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(123, 123, 123)
+                        .addComponent(btnestadocuenta)
+                        .addGap(112, 112, 112)
                         .addComponent(guardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(74, 74, 74)
                         .addComponent(cancelar)))
@@ -112,7 +117,9 @@ public class IngresarCuotaDialog extends javax.swing.JDialog {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(44, 44, 44)
                 .addComponent(jLabel1)
-                .addGap(0, 38, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnestadocuenta)
+                .addGap(0, 9, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -209,6 +216,12 @@ public class IngresarCuotaDialog extends javax.swing.JDialog {
         this.dispose();
     }//GEN-LAST:event_cancelarActionPerformed
 
+    private void btnestadocuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnestadocuentaActionPerformed
+        // TODO add your handling code here:
+        EstadoCuentaView pantalla = new EstadoCuentaView();
+pantalla.setVisible(true);
+    }//GEN-LAST:event_btnestadocuentaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -258,6 +271,7 @@ public class IngresarCuotaDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnestadocuenta;
     private javax.swing.JButton cancelar;
     private javax.swing.JButton guardar;
     private javax.swing.JComboBox<String> jComboBox1;
