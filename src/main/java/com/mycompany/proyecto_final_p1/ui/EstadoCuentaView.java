@@ -4,17 +4,61 @@
  */
 package com.mycompany.proyecto_final_p1.ui;
 
+import com.mycompany.proyecto_final_p1.model.Casa;
+import com.mycompany.proyecto_final_p1.util.CasaDAO;
+import com.mycompany.proyecto_final_p1.util.CuotaDAO;
+import java.util.List;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author gabri
  */
 public class EstadoCuentaView extends javax.swing.JFrame {
+    private CasaDAO casaDAO = new CasaDAO();
+    private CuotaDAO cuotaDAO = new CuotaDAO();
+    private List<Casa> listaCasas;
 
     /**
      * Creates new form EstadoCuentaView
      */
     public EstadoCuentaView() {
         initComponents();
+        this.setLocationRelativeTo(null); // Centra la pantalla
+        cargarCasasComboBox(); // Llena el combo con la BD
+    }
+private void cargarCasasComboBox() {
+        try {
+            jComboBoxCasas.removeAllItems();
+            listaCasas = casaDAO.listarCasas();
+            
+            for (Casa c : listaCasas) {
+                jComboBoxCasas.addItem("Casa No. " + c.getNumeroCasa());
+            }
+            
+            if (!listaCasas.isEmpty()) {
+                cargarEstadoCuentaTabla(listaCasas.get(0).getIdCasa());
+            }
+            
+        } catch (java.sql.SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar las casas: " + e.getMessage());
+        }
+    }
+
+    private void cargarEstadoCuentaTabla(int idCasa) {
+        String[] columnas = {"Año", "Mes", "Monto Cuota", "Monto Pagado", "Estado"};
+        javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0);
+        
+        try {
+            java.util.List<String[]> datos = cuotaDAO.obtenerEstadoCuentaPorCasa(idCasa);
+            for (String[] fila : datos) {
+                modelo.addRow(fila);
+            }
+            jTableEstadoCuenta.setModel(modelo);
+        } catch (java.sql.SQLException e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al llenar la tabla: " + e.getMessage());
+        }
     }
 
     /**
@@ -26,21 +70,161 @@ public class EstadoCuentaView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jComboBoxCasas = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableEstadoCuenta = new javax.swing.JTable();
+        btnDescargarPDF = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jComboBoxCasas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxCasas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxCasasItemStateChanged(evt);
+            }
+        });
+        jComboBoxCasas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCasasActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setText("ESTADO DE CUENTA");
+
+        jTableEstadoCuenta.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTableEstadoCuenta);
+
+        btnDescargarPDF.setText("Descargar");
+        btnDescargarPDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescargarPDFActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap(102, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(92, 92, 92))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnDescargarPDF)
+                        .addGap(228, 228, 228)
+                        .addComponent(jComboBoxCasas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBoxCasas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDescargarPDF))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jComboBoxCasasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCasasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBoxCasasActionPerformed
+
+    private void jComboBoxCasasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxCasasItemStateChanged
+        // TODO add your handling code here:
+        if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+    int indice = jComboBoxCasas.getSelectedIndex();
+    if (indice != -1 && listaCasas != null) {
+        Casa casaSeleccionada = listaCasas.get(indice);
+        cargarEstadoCuentaTabla(casaSeleccionada.getIdCasa());
+    }
+}
+    }//GEN-LAST:event_jComboBoxCasasItemStateChanged
+
+    private void btnDescargarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarPDFActionPerformed
+        // TODO add your handling code here:
+int indice = jComboBoxCasas.getSelectedIndex();
+if (indice == -1) {
+    JOptionPane.showMessageDialog(this, "Por favor, seleccione una casa primero.");
+    return;
+}
+
+Casa casaSeleccionada = listaCasas.get(indice);
+
+JFileChooser fileChooser = new JFileChooser();
+fileChooser.setDialogTitle("Guardar Estado de Cuenta");
+fileChooser.setSelectedFile(new java.io.File("Estado_Cuenta_Casa_" + casaSeleccionada.getNumeroCasa() + ".pdf")); 
+
+int seleccion = fileChooser.showSaveDialog(this);
+
+if (seleccion == JFileChooser.APPROVE_OPTION) {
+    java.io.File archivoGuardar = fileChooser.getSelectedFile();
+    String ruta = archivoGuardar.getAbsolutePath();
+    if (!ruta.toLowerCase().endsWith(".pdf")) {
+        ruta += ".pdf";
+    }
+
+    com.lowagie.text.Document documento = new com.lowagie.text.Document();
+    try {
+        com.lowagie.text.pdf.PdfWriter.getInstance(documento, new java.io.FileOutputStream(ruta));
+        documento.open();
+
+        documento.add(new com.lowagie.text.Paragraph("ESTADO DE CUENTA DE CONDOMINIO"));
+        documento.add(new com.lowagie.text.Paragraph("------------------------------------------------------------------------------------------"));
+        documento.add(new com.lowagie.text.Paragraph("Número de Casa: " + casaSeleccionada.getNumeroCasa()));
+        documento.add(new com.lowagie.text.Paragraph("Fecha de Emisión: " + java.time.LocalDate.now()));
+        documento.add(new com.lowagie.text.Paragraph(" ")); 
+
+        com.lowagie.text.pdf.PdfPTable tablaPDF = new com.lowagie.text.pdf.PdfPTable(5);
+        tablaPDF.addCell("Año");
+        tablaPDF.addCell("Mes");
+        tablaPDF.addCell("Monto Cuota");
+        tablaPDF.addCell("Monto Pagado");
+        tablaPDF.addCell("Estado");
+
+        int filasTabla = jTableEstadoCuenta.getRowCount();
+        for (int i = 0; i < filasTabla; i++) {
+            tablaPDF.addCell(jTableEstadoCuenta.getValueAt(i, 0).toString());
+            tablaPDF.addCell(jTableEstadoCuenta.getValueAt(i, 1).toString());
+            tablaPDF.addCell(jTableEstadoCuenta.getValueAt(i, 2).toString());
+            tablaPDF.addCell(jTableEstadoCuenta.getValueAt(i, 3).toString());
+            tablaPDF.addCell(jTableEstadoCuenta.getValueAt(i, 4).toString());
+        }
+
+        documento.add(tablaPDF);
+        JOptionPane.showMessageDialog(this, "¡PDF generado y guardado con éxito!");
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al generar el PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        if (documento.isOpen()) {
+            documento.close();
+        }
+    }
+}
+    }//GEN-LAST:event_btnDescargarPDFActionPerformed
 
     /**
      * @param args the command line arguments
@@ -78,5 +262,10 @@ public class EstadoCuentaView extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDescargarPDF;
+    private javax.swing.JComboBox<String> jComboBoxCasas;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableEstadoCuenta;
     // End of variables declaration//GEN-END:variables
 }
