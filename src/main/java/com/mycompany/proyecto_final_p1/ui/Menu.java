@@ -48,6 +48,7 @@ public class Menu extends javax.swing.JFrame {
         jMenu_Registro_Pagos = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         jMenu_Control_Cobros = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu_Reportes = new javax.swing.JMenu();
         jMenu_Casas_Morosas = new javax.swing.JMenuItem();
 
@@ -121,13 +122,21 @@ public class Menu extends javax.swing.JFrame {
         jMenu_Finanzas.add(jMenu_Registro_Pagos);
         jMenu_Finanzas.add(jSeparator4);
 
-        jMenu_Control_Cobros.setText("Control de Cobros");
+        jMenu_Control_Cobros.setText("Registro de Cobros");
         jMenu_Control_Cobros.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenu_Control_CobrosActionPerformed(evt);
             }
         });
         jMenu_Finanzas.add(jMenu_Control_Cobros);
+
+        jMenuItem1.setText("Registro de Cuota");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu_Finanzas.add(jMenuItem1);
 
         jMenuBar1.add(jMenu_Finanzas);
 
@@ -214,16 +223,26 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu_Salir1ActionPerformed
 
     private void jMenu_Registro_PagosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Registro_PagosActionPerformed
-        // TODO add your handling code here:
+        PagoView ventanaPago = new PagoView();
+        ventanaPago.setLocationRelativeTo(this);
+        ventanaPago.setVisible(true);
     }//GEN-LAST:event_jMenu_Registro_PagosActionPerformed
 
     private void jMenu_Control_CobrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Control_CobrosActionPerformed
-        // TODO add your handling code here:
+        CobrosView ventanaCobros = new CobrosView();
+        ventanaCobros.setLocationRelativeTo(this);
+        ventanaCobros.setVisible(true);
     }//GEN-LAST:event_jMenu_Control_CobrosActionPerformed
 
     private void jMenu_Casas_MorosasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Casas_MorosasActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenu_Casas_MorosasActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        CuotaView ventanaCuota = new CuotaView();
+        ventanaCuota.setLocationRelativeTo(this);
+        ventanaCuota.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -253,6 +272,7 @@ public class Menu extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenu jMenu_Archivo;
     private javax.swing.JMenuItem jMenu_Casas_Morosas;
     private javax.swing.JMenuItem jMenu_Control_Cobros;

@@ -57,16 +57,20 @@ public class PropietarioView extends javax.swing.JFrame {
         ));
         scpPropietarios.setViewportView(tblPropietarios);
 
-        btnAnadir.setText("Añadir");
+        jPanelEncabezado.setBackground(new java.awt.Color(255, 255, 255));
+
+        btnAnadir.setText("AÑADIR");
         btnAnadir.addActionListener(this::btnAnadirActionPerformed);
 
-        btnModificar.setText("Modificar");
+        btnModificar.setText("MODIFICAR");
         btnModificar.addActionListener(this::btnModificarActionPerformed);
 
-        btnEliminar.setText("Inactivar");
+        btnEliminar.setText("INACTIVAR");
         btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
-        btnSalir.setText("Salir");
+        btnSalir.setBackground(new java.awt.Color(204, 0, 0));
+        btnSalir.setForeground(new java.awt.Color(255, 255, 255));
+        btnSalir.setText("SALIR AL MENÚ");
         btnSalir.addActionListener(this::btnSalirActionPerformed);
 
         lblGestionPropietario.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -76,34 +80,36 @@ public class PropietarioView extends javax.swing.JFrame {
         jPanelEncabezado.setLayout(jPanelEncabezadoLayout);
         jPanelEncabezadoLayout.setHorizontalGroup(
             jPanelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanelEncabezadoLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEncabezadoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnSalir)
+                .addGap(104, 104, 104)
+                .addComponent(btnAnadir, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(33, 33, 33)
                 .addGroup(jPanelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelEncabezadoLayout.createSequentialGroup()
-                        .addGap(20, 20, 20)
-                        .addComponent(btnAnadir, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(14, 14, 14)
+                        .addComponent(lblGestionPropietario))
                     .addGroup(jPanelEncabezadoLayout.createSequentialGroup()
-                        .addGap(167, 167, 167)
-                        .addComponent(lblGestionPropietario)))
-                .addContainerGap(415, Short.MAX_VALUE))
+                        .addGap(25, 25, 25)
+                        .addComponent(btnModificar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(40, 40, 40)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(216, Short.MAX_VALUE))
         );
         jPanelEncabezadoLayout.setVerticalGroup(
             jPanelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelEncabezadoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblGestionPropietario)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAnadir)
-                    .addComponent(btnModificar)
-                    .addComponent(btnEliminar)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblGestionPropietario)
                     .addComponent(btnSalir))
-                .addGap(67, 67, 67))
+                .addGap(21, 21, 21)
+                .addGroup(jPanelEncabezadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnModificar)
+                    .addComponent(btnAnadir)
+                    .addComponent(btnEliminar))
+                .addGap(52, 52, 52))
         );
 
         lblGestionPropietario.getAccessibleContext().setAccessibleName("");
@@ -113,21 +119,20 @@ public class PropietarioView extends javax.swing.JFrame {
         jPanelPropietarioLayout.setHorizontalGroup(
             jPanelPropietarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPropietarioLayout.createSequentialGroup()
-                .addGroup(jPanelPropietarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanelPropietarioLayout.createSequentialGroup()
-                        .addGap(47, 47, 47)
-                        .addComponent(jPanelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelPropietarioLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(scpPropietarios, javax.swing.GroupLayout.PREFERRED_SIZE, 929, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(scpPropietarios)
+                .addContainerGap())
+            .addGroup(jPanelPropietarioLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jPanelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanelPropietarioLayout.setVerticalGroup(
             jPanelPropietarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelPropietarioLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(jPanelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(21, 21, 21)
+                .addComponent(jPanelEncabezado, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(scpPropietarios, javax.swing.GroupLayout.PREFERRED_SIZE, 377, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(14, Short.MAX_VALUE))
         );
@@ -136,16 +141,11 @@ public class PropietarioView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanelPropietario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanelPropietario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanelPropietario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 227, Short.MAX_VALUE))
+            .addComponent(jPanelPropietario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -162,7 +162,9 @@ public class PropietarioView extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAnadirActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
+        Menu ventana = new Menu();
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
         this.dispose(); // Esto cierra solo el cuadrito de registro y libera la memoria.
     }//GEN-LAST:event_btnSalirActionPerformed
 

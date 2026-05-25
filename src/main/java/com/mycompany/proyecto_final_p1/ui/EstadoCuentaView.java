@@ -70,28 +70,19 @@ private void cargarCasasComboBox() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBoxCasas = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
+        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTableEstadoCuenta = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         btnDescargarPDF = new javax.swing.JButton();
+        jComboBoxCasas = new javax.swing.JComboBox<>();
+        jLabel2 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jComboBoxCasas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBoxCasas.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                jComboBoxCasasItemStateChanged(evt);
-            }
-        });
-        jComboBoxCasas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxCasasActionPerformed(evt);
-            }
-        });
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        jLabel1.setText("ESTADO DE CUENTA");
+        jPanel1.setBackground(new java.awt.Color(0, 51, 102));
 
         jTableEstadoCuenta.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -106,43 +97,111 @@ private void cargarCasasComboBox() {
         ));
         jScrollPane1.setViewportView(jTableEstadoCuenta);
 
-        btnDescargarPDF.setText("Descargar");
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/estado-cuenta-vista.png"))); // NOI18N
+
+        btnDescargarPDF.setText("DESCARGAR");
         btnDescargarPDF.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDescargarPDFActionPerformed(evt);
             }
         });
 
+        jComboBoxCasas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxCasas.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                jComboBoxCasasItemStateChanged(evt);
+            }
+        });
+        jComboBoxCasas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBoxCasasActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/descargas.png"))); // NOI18N
+
+        jButton1.setBackground(new java.awt.Color(204, 0, 0));
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("REGRESAR AL MENÚ");
+        jButton1.setToolTipText("");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(43, 43, 43)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnDescargarPDF)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
+                .addComponent(jComboBoxCasas, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(185, 185, 185))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnDescargarPDF)
+                        .addComponent(jComboBoxCasas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel2))
+                .addGap(19, 19, 19))
+        );
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(102, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(92, 92, 92))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(btnDescargarPDF)
-                        .addGap(228, 228, 228)
-                        .addComponent(jComboBoxCasas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxCasas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDescargarPDF))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(31, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -155,76 +214,159 @@ private void cargarCasasComboBox() {
     private void jComboBoxCasasItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBoxCasasItemStateChanged
         // TODO add your handling code here:
         if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
-    int indice = jComboBoxCasas.getSelectedIndex();
-    if (indice != -1 && listaCasas != null) {
-        Casa casaSeleccionada = listaCasas.get(indice);
-        cargarEstadoCuentaTabla(casaSeleccionada.getIdCasa());
-    }
-}
+            int indice = jComboBoxCasas.getSelectedIndex();
+            if (indice != -1 && listaCasas != null) {
+                Casa casaSeleccionada = listaCasas.get(indice);
+                cargarEstadoCuentaTabla(casaSeleccionada.getIdCasa());
+            }
+        }
     }//GEN-LAST:event_jComboBoxCasasItemStateChanged
 
     private void btnDescargarPDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarPDFActionPerformed
-        // TODO add your handling code here:
-int indice = jComboBoxCasas.getSelectedIndex();
-if (indice == -1) {
-    JOptionPane.showMessageDialog(this, "Por favor, seleccione una casa primero.");
-    return;
-}
-
-Casa casaSeleccionada = listaCasas.get(indice);
-
-JFileChooser fileChooser = new JFileChooser();
-fileChooser.setDialogTitle("Guardar Estado de Cuenta");
-fileChooser.setSelectedFile(new java.io.File("Estado_Cuenta_Casa_" + casaSeleccionada.getNumeroCasa() + ".pdf")); 
-
-int seleccion = fileChooser.showSaveDialog(this);
-
-if (seleccion == JFileChooser.APPROVE_OPTION) {
-    java.io.File archivoGuardar = fileChooser.getSelectedFile();
-    String ruta = archivoGuardar.getAbsolutePath();
-    if (!ruta.toLowerCase().endsWith(".pdf")) {
-        ruta += ".pdf";
-    }
-
-    com.lowagie.text.Document documento = new com.lowagie.text.Document();
-    try {
-        com.lowagie.text.pdf.PdfWriter.getInstance(documento, new java.io.FileOutputStream(ruta));
-        documento.open();
-
-        documento.add(new com.lowagie.text.Paragraph("ESTADO DE CUENTA DE CONDOMINIO"));
-        documento.add(new com.lowagie.text.Paragraph("------------------------------------------------------------------------------------------"));
-        documento.add(new com.lowagie.text.Paragraph("Número de Casa: " + casaSeleccionada.getNumeroCasa()));
-        documento.add(new com.lowagie.text.Paragraph("Fecha de Emisión: " + java.time.LocalDate.now()));
-        documento.add(new com.lowagie.text.Paragraph(" ")); 
-
-        com.lowagie.text.pdf.PdfPTable tablaPDF = new com.lowagie.text.pdf.PdfPTable(5);
-        tablaPDF.addCell("Año");
-        tablaPDF.addCell("Mes");
-        tablaPDF.addCell("Monto Cuota");
-        tablaPDF.addCell("Monto Pagado");
-        tablaPDF.addCell("Estado");
-
-        int filasTabla = jTableEstadoCuenta.getRowCount();
-        for (int i = 0; i < filasTabla; i++) {
-            tablaPDF.addCell(jTableEstadoCuenta.getValueAt(i, 0).toString());
-            tablaPDF.addCell(jTableEstadoCuenta.getValueAt(i, 1).toString());
-            tablaPDF.addCell(jTableEstadoCuenta.getValueAt(i, 2).toString());
-            tablaPDF.addCell(jTableEstadoCuenta.getValueAt(i, 3).toString());
-            tablaPDF.addCell(jTableEstadoCuenta.getValueAt(i, 4).toString());
+        int indice = jComboBoxCasas.getSelectedIndex();
+        if (indice == -1) {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione una casa primero.");
+            return;
         }
+        Casa casaSeleccionada = listaCasas.get(indice);
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Guardar Estado de Cuenta");
+        fileChooser.setSelectedFile(new java.io.File("Estado_Cuenta_Casa_" + casaSeleccionada.getNumeroCasa() + ".pdf"));
+        int seleccion = fileChooser.showSaveDialog(this);
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
+            java.io.File archivoGuardar = fileChooser.getSelectedFile();
+            String ruta = archivoGuardar.getAbsolutePath();
+            if (!ruta.toLowerCase().endsWith(".pdf")) {
+                ruta += ".pdf";
+            }
 
-        documento.add(tablaPDF);
-        JOptionPane.showMessageDialog(this, "¡PDF generado y guardado con éxito!");
+            com.lowagie.text.Document documento = new com.lowagie.text.Document();
+            try {
+                com.lowagie.text.pdf.PdfWriter.getInstance(documento, new java.io.FileOutputStream(ruta));
+                documento.open();
 
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al generar el PDF: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-    } finally {
-        if (documento.isOpen()) {
-            documento.close();
+                // Fuentes
+                com.lowagie.text.Font fuenteTitulo = new com.lowagie.text.Font(
+                        com.lowagie.text.Font.HELVETICA, 20, com.lowagie.text.Font.BOLD,
+                        new java.awt.Color(0, 51, 102));
+                com.lowagie.text.Font fuenteSubtitulo = new com.lowagie.text.Font(
+                        com.lowagie.text.Font.HELVETICA, 12, com.lowagie.text.Font.BOLD,
+                        new java.awt.Color(0, 51, 102));
+                com.lowagie.text.Font fuenteNormal = new com.lowagie.text.Font(
+                        com.lowagie.text.Font.HELVETICA, 10);
+                com.lowagie.text.Font fuenteBlanca = new com.lowagie.text.Font(
+                        com.lowagie.text.Font.HELVETICA, 10, com.lowagie.text.Font.BOLD,
+                        java.awt.Color.WHITE);
+
+                // Título
+                com.lowagie.text.Paragraph titulo = new com.lowagie.text.Paragraph(
+                        "ESTADO DE CUENTA DE CONDOMINIO", fuenteTitulo);
+                titulo.setAlignment(com.lowagie.text.Element.ALIGN_CENTER);
+                documento.add(titulo);
+
+                // Línea separadora
+                com.lowagie.text.Paragraph linea = new com.lowagie.text.Paragraph(
+                        "________________________________________________",
+                        new com.lowagie.text.Font(com.lowagie.text.Font.HELVETICA, 10,
+                                com.lowagie.text.Font.NORMAL, new java.awt.Color(0, 51, 102)));
+                linea.setAlignment(com.lowagie.text.Element.ALIGN_CENTER);
+                documento.add(linea);
+                documento.add(new com.lowagie.text.Paragraph(" "));
+
+                // Info de la casa
+                documento.add(new com.lowagie.text.Paragraph(
+                        "Número de Casa: " + casaSeleccionada.getNumeroCasa(), fuenteSubtitulo));
+                documento.add(new com.lowagie.text.Paragraph(
+                        "Fecha de Emisión: " + java.time.LocalDate.now(), fuenteNormal));
+                documento.add(new com.lowagie.text.Paragraph(" "));
+
+                // Tabla
+                com.lowagie.text.pdf.PdfPTable tablaPDF = new com.lowagie.text.pdf.PdfPTable(5);
+                tablaPDF.setWidthPercentage(100);
+
+                // Encabezados con fondo azul
+                String[] columnas = {"Año", "Mes", "Monto Cuota", "Monto Pagado", "Estado"};
+                for (String col : columnas) {
+                    com.lowagie.text.pdf.PdfPCell celda = new com.lowagie.text.pdf.PdfPCell(
+                            new com.lowagie.text.Phrase(col, fuenteBlanca));
+                    celda.setBackgroundColor(new java.awt.Color(0, 51, 102));
+                    celda.setHorizontalAlignment(com.lowagie.text.Element.ALIGN_CENTER);
+                    celda.setPadding(8);
+                    tablaPDF.addCell(celda);
+                }
+
+                // Filas con color alternado
+                int filasTabla = jTableEstadoCuenta.getRowCount();
+                int totalEsperado = 0;
+                int totalPagado = 0;
+
+                for (int i = 0; i < filasTabla; i++) {
+                    for (int j = 0; j < 5; j++) {
+                        com.lowagie.text.pdf.PdfPCell celda = new com.lowagie.text.pdf.PdfPCell(
+                                new com.lowagie.text.Phrase(
+                                        jTableEstadoCuenta.getValueAt(i, j).toString(), fuenteNormal));
+                        if (i % 2 == 0) {
+                            celda.setBackgroundColor(new java.awt.Color(235, 241, 255));
+                        }
+                        // Colorear estado
+                        if (j == 4) {
+                            String estado = jTableEstadoCuenta.getValueAt(i, j).toString();
+                            if (estado.equals("Pendiente")) {
+                                celda.setBackgroundColor(new java.awt.Color(255, 220, 220));
+                            } else {
+                                celda.setBackgroundColor(new java.awt.Color(220, 255, 220));
+                            }
+                        }
+                        celda.setPadding(6);
+                        celda.setHorizontalAlignment(com.lowagie.text.Element.ALIGN_CENTER);
+                        tablaPDF.addCell(celda);
+                    }
+                    // Acumular totales
+                    try {
+                        String montoCuota = jTableEstadoCuenta.getValueAt(i, 2).toString().trim().replace("Q.", "");
+                        String montoPagado = jTableEstadoCuenta.getValueAt(i, 3).toString().trim().replace("Q.", "");
+
+                        if (!montoCuota.isEmpty()) {
+                            totalEsperado += Integer.parseInt(montoCuota);
+                        }
+                        if (!montoPagado.isEmpty()) {
+                            totalPagado += Integer.parseInt(montoPagado);
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Error parseando: " + e.getMessage());
+                    }
+                }
+                documento.add(tablaPDF);
+                documento.add(new com.lowagie.text.Paragraph(" "));
+
+                // Resumen de totales
+                documento.add(new com.lowagie.text.Paragraph("RESUMEN", fuenteSubtitulo));
+                documento.add(new com.lowagie.text.Paragraph(
+                        "Total esperado: Q" + totalEsperado, fuenteNormal));
+                documento.add(new com.lowagie.text.Paragraph(
+                        "Total pagado: Q" + totalPagado, fuenteNormal));
+                documento.add(new com.lowagie.text.Paragraph(
+                        "Diferencia: Q" + (totalEsperado - totalPagado), fuenteNormal));
+
+                JOptionPane.showMessageDialog(this, "¡PDF generado y guardado con éxito!");
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al generar el PDF: " + e.getMessage(),
+                        "Error", JOptionPane.ERROR_MESSAGE);
+            } finally {
+                if (documento.isOpen()) {
+                    documento.close();
+                }
+            }
         }
-    }
-}
     }//GEN-LAST:event_btnDescargarPDFActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        Menu ventana = new Menu();
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,8 +405,12 @@ if (seleccion == JFileChooser.APPROVE_OPTION) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDescargarPDF;
+    private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBoxCasas;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableEstadoCuenta;
     // End of variables declaration//GEN-END:variables
