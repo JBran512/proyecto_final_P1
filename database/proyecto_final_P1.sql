@@ -89,4 +89,16 @@ CREATE TABLE cobros(
     PRIMARY KEY(id_cobro)
 );
 
+CREATE TABLE cobro_casa(
+    id_cobro_casa INT AUTO_INCREMENT,
+    id_cobro INT NOT NULL,
+    id_casa INT NOT NULL,
+    pagado BOOLEAN DEFAULT FALSE,
+
+    PRIMARY KEY(id_cobro_casa),
+
+    FOREIGN KEY(id_cobro) REFERENCES cobros(id_cobro),
+    FOREIGN KEY(id_casa) REFERENCES casa(id_casa)
+);
+
 
