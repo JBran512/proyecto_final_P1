@@ -12,14 +12,16 @@ public class Pago {
     private int idPago;
     private int idCasa;
     private int idCuota;
+    private int idCobro;
     private int montoPagado;
     private boolean pagado;
 
     // Constructor
-    public Pago(int idCasa, int idCuota, int montoPagado) {
+    public Pago(int idCasa, int idCuota, int montoPagado, int idCobro) {
         this.idCasa = idCasa;
         this.idCuota = idCuota;
         this.montoPagado = montoPagado;
+        this.idCobro = idCobro;
         this.pagado = false; // por defecto false al crear
     }
     
@@ -66,5 +68,13 @@ public class Pago {
 
     public void setPagado(boolean pagado) {
         this.pagado = pagado;
+    }
+    
+    public int getIdCobro(){
+        return idCobro;
+    }
+    
+    public void setIdCobro(int idCobro){
+        this.idCobro = idCobro;
     }
 }
