@@ -66,22 +66,88 @@ public class PagoDAO {
         return lista;
     }
     
-    public boolean registrarPago(Pago pago) throws SQLException{
-        try{
+    public List<Pago> listarPagosPendientes(int idCasa) throws SQLException {
+        List<Pago> lista = new ArrayList<>();
+        try {
             Connection con = Conexion.getConexion();
             PreparedStatement ps = con.prepareStatement(
-                "UPDATE pago SET pagado = ?, monto_pagado = ? WHERE id_pago = ?"
+                "SELECT p.id_pago, p.id_casa, p.id_cobro, p.pagado, " +
+                "c.monto as monto_cuota " +
+                "FROM pago p " +
+                "INNER JOIN cobros co ON p.id_cobro = co.id_cobro " +
+                "INNER JOIN cuota c ON co.id_cuota = c.id_cuota " +
+                "WHERE p.id_casa = ? AND p.pagado = false"
             );
-            ps.setBoolean(1, pago.isPagado());
-            ps.setInt(2, pago.getMontoPagado());
-            ps.setInt(3, pago.getIdPago());
-            return ps.executeUpdate() > 0;
+            ps.setInt(1, idCasa);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Pago p = new Pago();
+                p.setIdPago(rs.getInt("id_pago"));
+                p.setIdCasa(rs.getInt("id_casa"));
+                p.setMontoPagado(rs.getInt("monto_cuota"));
+                p.setIdCobro(rs.getInt("id_cobro"));
+                p.setPagado(rs.getBoolean("pagado"));
+                lista.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return lista;
+    }
+    
+    public List<Pago> listarPagosSaldados(int idCasa) throws SQLException {
+        List<Pago> lista = new ArrayList<>();
+        try {
+            Connection con = Conexion.getConexion();
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT * FROM pago WHERE id_casa = ? AND pagado = true"
+            );
+            ps.setInt(1, idCasa);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Pago p = new Pago();
+                p.setIdPago(rs.getInt("id_pago"));
+                p.setIdCasa(rs.getInt("id_casa"));
+                p.setMontoPagado(rs.getInt("monto_pagado"));
+                p.setIdCobro(rs.getInt("id_cobro"));
+                p.setPagado(rs.getBoolean("pagado"));
+                lista.add(p);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return lista;
+    }
+    
+    public boolean registrarPago(int idPago, int idCobro) throws SQLException {
+        try {
+            Connection con = Conexion.getConexion();
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT c.monto FROM cuota c "
+                    + "INNER JOIN cobros co ON c.id_cuota = co.id_cuota "
+                    + "WHERE co.id_cobro = ?"
+            );
+            ps.setInt(1, idCobro);
+            ResultSet rs = ps.executeQuery();
+
+            int monto = 0;
+            if (rs.next()) {
+                monto = rs.getInt("monto");
+            }
+
+            PreparedStatement ps2 = con.prepareStatement(
+                    "UPDATE pago SET pagado = true, monto_pagado = ? WHERE id_pago = ?"
+            );
+            ps2.setInt(1, monto);
+            ps2.setInt(2, idPago);
+            return ps2.executeUpdate() > 0;
+
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());
         }
         return false;
     }
-    
+
     public boolean existePago(int idCasa, int idCobro) throws SQLException{
         try{
             Connection con = Conexion.getConexion();
