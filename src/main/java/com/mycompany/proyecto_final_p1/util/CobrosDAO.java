@@ -24,14 +24,13 @@ public class CobrosDAO {
 
         try {
             Connection con = Conexion.getConexion();
-            String sql = "INSERT INTO cobros(id_cuota, fechaInicio, fechaLimite, createdBy, descripcion) values (?,?,?,?,?)";
+            String sql = "INSERT INTO cobros(id_cuota, fechaInicio, fechaLimite, createdBy) values (?,?,?,?)";
 
             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, cobros.getIdCuota());
             ps.setDate(2, cobros.getFechaInicio());
             ps.setDate(3, cobros.getFechaLimite());
             ps.setInt(4, cobros.getCreatedBy());
-            ps.setString(5, cobros.getDescripcion());
 
             ps.executeUpdate();
             ResultSet rs = ps.getGeneratedKeys();

@@ -25,7 +25,7 @@ CREATE TABLE condominio(
 CREATE TABLE propietario(
 	id_propietario INT NOT NULL AUTO_INCREMENT,
     nombre VARCHAR(100) NOT NULL,
-    telefono VARCHAR(9) NOT NULL,
+    telefono VARCHAR(20) NOT NULL,
     correo VARCHAR (100) NOT NULL UNIQUE,
     created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     update_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -88,17 +88,52 @@ CREATE TABLE cobros(
     createdBy INT NOT NULL,
     PRIMARY KEY(id_cobro)
 );
+#usar para modificar el tamaño de telefono
+USE proyecto_final_P1;
+ALTER TABLE propietario 
+MODIFY COLUMN telefono VARCHAR(20) NOT NULL;
+
+#Se modifica la tabla pago
+DROP TABLE pago;
+CREATE TABLE pago(
+    id_pago INT NOT NULL AUTO_INCREMENT,
+    id_casa INT NOT NULL,
+    id_cobro INT NOT NULL,
+    monto_pagado INT NOT NULL,
+    pagado BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    created_by INT NOT NULL,
+    FOREIGN KEY (created_by) REFERENCES usuario(id_usuario),
+    FOREIGN KEY (id_casa) REFERENCES casa(id_casa),
+    FOREIGN KEY (id_cobro) REFERENCES cobros(id_cobro),
+    UNIQUE KEY uk_casa_cobro (id_casa, id_cobro),
+    PRIMARY KEY (id_pago)
+);
 
 CREATE TABLE cobro_casa(
     id_cobro_casa INT AUTO_INCREMENT,
-    id_cobro INT NOT NULL,
     id_casa INT NOT NULL,
     pagado BOOLEAN DEFAULT FALSE,
+    monto INT NOT NULL,
+    fechaInicio DATE,
+    fechaLimite DATE,
+    tipo_cobro VARCHAR(50),
+    mes INT NULL,
+    anio INT NULL,
 
     PRIMARY KEY(id_cobro_casa),
-
-    FOREIGN KEY(id_cobro) REFERENCES cobros(id_cobro),
+    
     FOREIGN KEY(id_casa) REFERENCES casa(id_casa)
 );
 
+#Se modifica la tabla cobros 
+ALTER TABLE cobros DROP COLUMN monto;
+ALTER TABLE cobros ADD COLUMN id_cuota INT NOT NULL;
+ALTER TABLE cobros ADD FOREIGN KEY (id_cuota) REFERENCES cuota(id_cuota);
 
+SELECT * FROM cobros;
+SELECT * FROM pago;
+
+#Crear usuario admin
+INSERT INTO usuario(usuario, contrasena)
+VALUES ('admin', '123');

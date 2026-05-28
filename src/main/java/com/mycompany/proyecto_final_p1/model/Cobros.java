@@ -18,14 +18,12 @@ public class Cobros {
     private int createdBy;
     private int mes;
     private int anio;
-    String descripcion;
 
-    public Cobros(int idCuota, Date fechaInicio, Date fechaLimite, int createdBy, String descripcion) {
+    public Cobros(int idCuota, Date fechaInicio, Date fechaLimite, int createdBy) {
         this.idCuota = idCuota;
         this.fechaInicio = fechaInicio;
         this.fechaLimite = fechaLimite;
         this.createdBy = createdBy;
-        this.descripcion = descripcion;
     }
 
     public Cobros() {
@@ -89,15 +87,4 @@ public class Cobros {
         this.createdBy = createdBy;
     }
 
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    
-    
-     
 }
