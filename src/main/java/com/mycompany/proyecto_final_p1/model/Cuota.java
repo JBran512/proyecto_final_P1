@@ -8,13 +8,14 @@ package com.mycompany.proyecto_final_p1.model;
  *
  * @author Admin
  */
+//degfine la couta establecida para un periodo especifico
 public class Cuota {
     private int idCuota;
     private int mes;
     private int anio;
     private int monto;
     private int createdBy;
-    
+    //inicia y registra una nueva couta periodica
     public Cuota(int mes, int anio, int monto){
         this.mes = mes;
         this.anio = anio;
@@ -39,7 +40,7 @@ public class Cuota {
     public void setMes(int mes){
         this.mes = mes;
     }
-    
+    //metodos de acceso
     public int getAnio(){
         return anio;
     }

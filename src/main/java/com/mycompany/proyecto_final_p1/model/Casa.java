@@ -9,13 +9,14 @@ package com.mycompany.proyecto_final_p1.model;
  * @author Admin
  */
 public class Casa {
+    //atributos de la casa, mapeo de la base de datos
     private int idCasa;
     private int numeroCasa;
     private int idPropietario;
     private int idCondominio;
     private int createdBy;
 
-    // Constructor para insertar
+    // Constructor para insertar, ID casa es generado automaticamente por la base de datos
     public Casa(int numeroCasa, int idPropietario, int idCondominio) {
         this.numeroCasa = numeroCasa;
         this.idPropietario = idPropietario;

@@ -9,6 +9,8 @@ import com.mycompany.proyecto_final_p1.ui.LoginView;
  *
  * @author Admin
  */
+
+//contiene el metodo main para ejecutar la app
 public class Proyecto_final_P1 {
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
