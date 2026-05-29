@@ -28,15 +28,16 @@ import javax.swing.JOptionPane;
  * @author Chriss
  */
 public class CobrosView extends javax.swing.JFrame {
-    
+    //atributos para el control de datos
     private CobrosDAO ad = new CobrosDAO();
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Cobros.class.getName());
-
+//coleccions en memoria para llenar los componentes visuales (tablas y comboboxes)
     private ArrayList<Cobroindividual> listaCasas;
     private List<Cuota> listaCuotas;
     /**
      * Creates new form Cobros
      */
+    //carga los datos iniciales desde la base de datos
     public CobrosView() {
         initComponents();
         cargarCuotas();
@@ -53,7 +54,10 @@ public class CobrosView extends javax.swing.JFrame {
             System.out.println("Error de conexión: " + e.getMessage());
         }*/
     }
-    
+    /**
+     * Valida el segundo formulario (Cobro Específico).
+     * * @return true si los datos son válidos para procesar, false si hay campos pendientes.
+     */
     private boolean camposVacios() {
 
         if (jComboBox1.getSelectedIndex() == -1) {
@@ -87,7 +91,7 @@ public class CobrosView extends javax.swing.JFrame {
         }
         return true;
     }
-    
+    //restablece los componentes del segundo formulatrio a los valores default
     private void limpiarCamposDos() {
 
         comboboxcasa.setSelectedIndex(0);
@@ -99,6 +103,7 @@ public class CobrosView extends javax.swing.JFrame {
         Datefin.setDate(null);
 
     }
+    //restablece los componentes del primer formulatrio a los valores default
 
     private void limpiarCampos() {
 
@@ -382,10 +387,11 @@ public class CobrosView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCobrarActionPerformed
+       // se asegura de que el formulario tenga datos antes de operar
         if (!camposVacios()) {
             int indice = jComboBox1.getSelectedIndex();
             Cuota cuotaSeleccionada = listaCuotas.get(indice);
-
+//valida que el Jcalendar coincida con el mes/año de la cuota
             if (!validarFechas(cuotaSeleccionada)) {
                 JOptionPane.showMessageDialog(this,
                         "Las fechas no corresponden al mes y año de la cuota seleccionada.",
@@ -395,6 +401,7 @@ public class CobrosView extends javax.swing.JFrame {
             }
 
             try {
+                //evita saltarse meses para asegurar el orden de los pagos
                 Cobros ultimoCobro = ad.obtenerUlimoCobro();
                 if (ultimoCobro != null) {
                     int mesSiguiente = ultimoCobro.getMes() + 1;
@@ -424,14 +431,14 @@ public class CobrosView extends javax.swing.JFrame {
             cobro.setFechaLimite(fechaLimite);
 
             cobro.setCreatedBy(Sesion.getIdUsuario());
-
+//ejecuta la insercion en base de datos y da el ID autogenerado del cobro
             int respuesta = ad.realizarCobro(cobro);
 
             if (respuesta != 1) {
                 PagoDAO dao = new PagoDAO();
                 try {
                     dao.generarPagos(respuesta);
-                    
+                   //asigna las deeudas por casa individual 
                     CasaDAO casaDao = new CasaDAO();
                     List<Casa> casas = casaDao.listarCasas();
                     CobroindividualDAO cobrar = new CobroindividualDAO();

@@ -16,6 +16,7 @@ import java.util.ArrayList;
  *
  * @author Admin
  */
+//centraliza operaciones CRUD directas en la base de datos mediante consultas de SQL
 public class CasaDAO {
     //Metodos necesarios para extraer, insertar, crear, actualizar y listar datos de la base de datos
     public List<Casa> listarCasas() throws SQLException{
@@ -39,7 +40,7 @@ public class CasaDAO {
         }
         return lista;
     }
-    
+    //corrobora si existe una casa registrada con un numero especifico en el sistema
     public boolean existeNumero(int numeroCasa) throws SQLException{
         try{
             Connection con = Conexion.getConexion();

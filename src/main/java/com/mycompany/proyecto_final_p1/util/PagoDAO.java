@@ -42,7 +42,7 @@ public class PagoDAO {
         }
       return false;
   }
-  
+  //obtiene una lista con las deudas pendientes a un lote o grupo de cobro especifico
     public List<Pago> listarPendientes(int idCobro) throws SQLException {
         List<Pago> lista = new ArrayList<>();
         try {
@@ -70,6 +70,7 @@ public class PagoDAO {
         List<Pago> lista = new ArrayList<>();
         try {
             Connection con = Conexion.getConexion();
+                        //consulta avanzada con JOINS para mapear el costo real
             PreparedStatement ps = con.prepareStatement(
                 "SELECT p.id_pago, p.id_casa, p.id_cobro, p.pagado, " +
                 "c.monto as monto_cuota " +
