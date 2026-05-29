@@ -85,7 +85,43 @@ public class PagoDAO {
         }
         return lista;
     }
-    
+    public List<Pago> listarPagosPorCobro(int idCobro) throws SQLException {
+    List<Pago> lista = new ArrayList<>();
+    try {
+        Connection con = Conexion.getConexion();
+        // Unimos pago con cobros y cuotas para tener acceso tanto a lo pagado como al valor de la cuota original
+        PreparedStatement ps = con.prepareStatement(
+            "SELECT p.id_pago, p.id_casa, p.id_cobro, p.monto_pagado, p.pagado, " +
+            "c.monto as monto_cuota " +
+            "FROM pago p " +
+            "INNER JOIN cobros co ON p.id_cobro = co.id_cobro " +
+            "INNER JOIN cuota c ON co.id_cuota = c.id_cuota " +
+            "WHERE p.id_cobro = ?"
+        );
+        ps.setInt(1, idCobro);
+        ResultSet rs = ps.executeQuery();
+        
+        while (rs.next()) {
+            Pago p = new Pago();
+            p.setIdPago(rs.getInt("id_pago"));
+            p.setIdCasa(rs.getInt("id_casa"));
+            p.setIdCobro(rs.getInt("id_cobro"));
+            p.setPagado(rs.getBoolean("pagado"));
+            
+            // Lógica de negocio
+            if (p.isPagado()) { // Si pagado == true
+                p.setMontoPagado(rs.getInt("monto_pagado"));
+            } else {            // Si pagado == false
+                p.setMontoPagado(rs.getInt("monto_cuota"));
+            }
+            
+            lista.add(p);
+        }
+    } catch (SQLException e) {
+        System.out.println("Error en listarPagosPorCobro: " + e.getMessage());
+    }
+    return lista;
+}
     public List<Pago> listarPagosPendientes(int idCasa) throws SQLException {
         List<Pago> lista = new ArrayList<>();
         try {
