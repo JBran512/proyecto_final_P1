@@ -37,7 +37,6 @@ public class Menu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu_Archivo = new javax.swing.JMenu();
-        jMenu_Reinicio_Clave = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
         jMenu_Salir1 = new javax.swing.JMenuItem();
         jMenu_Opciones = new javax.swing.JMenu();
@@ -48,9 +47,12 @@ public class Menu extends javax.swing.JFrame {
         jMenu_Registro_Pagos = new javax.swing.JMenuItem();
         jSeparator4 = new javax.swing.JPopupMenu.Separator();
         jMenu_Control_Cobros = new javax.swing.JMenuItem();
+        jSeparator5 = new javax.swing.JPopupMenu.Separator();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu_Reportes = new javax.swing.JMenu();
         jMenu_Casas_Morosas = new javax.swing.JMenuItem();
+        jSeparator6 = new javax.swing.JPopupMenu.Separator();
+        jMenu_Estado_de_Cuenta = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -70,14 +72,6 @@ public class Menu extends javax.swing.JFrame {
         jPanel2.add(jLabel1, gridBagConstraints);
 
         jMenu_Archivo.setText("Archivo");
-
-        jMenu_Reinicio_Clave.setText("Rinicio de Clave");
-        jMenu_Reinicio_Clave.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu_Reinicio_ClaveActionPerformed(evt);
-            }
-        });
-        jMenu_Archivo.add(jMenu_Reinicio_Clave);
         jMenu_Archivo.add(jSeparator3);
 
         jMenu_Salir1.setText("Salir");
@@ -129,6 +123,7 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         jMenu_Finanzas.add(jMenu_Control_Cobros);
+        jMenu_Finanzas.add(jSeparator5);
 
         jMenuItem1.setText("Registro de Cuota");
         jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
@@ -149,6 +144,15 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         jMenu_Reportes.add(jMenu_Casas_Morosas);
+        jMenu_Reportes.add(jSeparator6);
+
+        jMenu_Estado_de_Cuenta.setText("Estado de Cuenta");
+        jMenu_Estado_de_Cuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu_Estado_de_CuentaActionPerformed(evt);
+            }
+        });
+        jMenu_Reportes.add(jMenu_Estado_de_Cuenta);
 
         jMenuBar1.add(jMenu_Reportes);
 
@@ -179,6 +183,7 @@ public class Menu extends javax.swing.JFrame {
     
     // 3. Hacerla visible
     ventanaMantoPropietario.setVisible(true);
+    this.dispose();
     }//GEN-LAST:event_jMenu_Manto_PropietarioActionPerformed
 
     private void jMenu_Manto_CasaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Manto_CasaActionPerformed
@@ -191,11 +196,8 @@ public class Menu extends javax.swing.JFrame {
     
     // La hacemos aparecer
     ventana.setVisible(true);
+    this.dispose();
     }//GEN-LAST:event_jMenu_Manto_CasaActionPerformed
-
-    private void jMenu_Reinicio_ClaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Reinicio_ClaveActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenu_Reinicio_ClaveActionPerformed
 
     private void jMenu_Salir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Salir1ActionPerformed
         // 1. Mostrar el cuadro de diálogo de confirmación
@@ -226,16 +228,21 @@ public class Menu extends javax.swing.JFrame {
         PagoView ventanaPago = new PagoView();
         ventanaPago.setLocationRelativeTo(this);
         ventanaPago.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jMenu_Registro_PagosActionPerformed
 
     private void jMenu_Control_CobrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Control_CobrosActionPerformed
         CobrosView ventanaCobros = new CobrosView();
         ventanaCobros.setLocationRelativeTo(this);
         ventanaCobros.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jMenu_Control_CobrosActionPerformed
 
     private void jMenu_Casas_MorosasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Casas_MorosasActionPerformed
-        // TODO add your handling code here:
+        CasasMorosasView ventana = new CasasMorosasView();
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jMenu_Casas_MorosasActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -243,6 +250,13 @@ public class Menu extends javax.swing.JFrame {
         ventanaCuota.setLocationRelativeTo(this);
         ventanaCuota.setVisible(true);
     }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenu_Estado_de_CuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Estado_de_CuentaActionPerformed
+        EstadoCuentaView ventana = new EstadoCuentaView();
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jMenu_Estado_de_CuentaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -276,17 +290,19 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu_Archivo;
     private javax.swing.JMenuItem jMenu_Casas_Morosas;
     private javax.swing.JMenuItem jMenu_Control_Cobros;
+    private javax.swing.JMenuItem jMenu_Estado_de_Cuenta;
     private javax.swing.JMenu jMenu_Finanzas;
     private javax.swing.JMenuItem jMenu_Manto_Casa;
     private javax.swing.JMenuItem jMenu_Manto_Propietario;
     private javax.swing.JMenu jMenu_Opciones;
     private javax.swing.JMenuItem jMenu_Registro_Pagos;
-    private javax.swing.JMenuItem jMenu_Reinicio_Clave;
     private javax.swing.JMenu jMenu_Reportes;
     private javax.swing.JMenuItem jMenu_Salir1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JPopupMenu.Separator jSeparator5;
+    private javax.swing.JPopupMenu.Separator jSeparator6;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,13 +15,18 @@ public class Pago {
     private int idCobro;
     private int montoPagado;
     private boolean pagado;
+    private int idCobroCasa;
+    private int numeroCasa;
+    private String nombrePropietario;
+    private String telefonoPropietario;
 
     // Constructor
-    public Pago(int idCasa, int idCuota, int montoPagado, int idCobro) {
+    public Pago(int idCasa, int idCuota, int montoPagado, int idCobro, int idCobroCasa) {
         this.idCasa = idCasa;
         this.idCuota = idCuota;
         this.montoPagado = montoPagado;
         this.idCobro = idCobro;
+        this.idCobroCasa = idCobroCasa;
         this.pagado = false; // por defecto false al crear
     }
     
@@ -76,5 +81,31 @@ public class Pago {
     
     public void setIdCobro(int idCobro){
         this.idCobro = idCobro;
+    }
+    
+    public int getIdCobroCasa(){
+        return idCobroCasa;
+    }
+    
+    public void setIdCobroCasa(int idCobroCasa) {
+        this.idCobroCasa = idCobroCasa;
+    }
+    public int getNumeroCasa() { 
+        return numeroCasa; 
+    }
+    public void setNumeroCasa(int numeroCasa) { 
+        this.numeroCasa = numeroCasa; 
+    }
+    public String getNombrePropietario() { 
+        return nombrePropietario; 
+    }
+    public void setNombrePropietario(String nombrePropietario) { 
+        this.nombrePropietario = nombrePropietario; 
+    }
+    public String getTelefonoPropietario() { 
+        return telefonoPropietario; 
+    }
+    public void setTelefonoPropietario(String telefonoPropietario) { 
+        this.telefonoPropietario = telefonoPropietario; 
     }
 }

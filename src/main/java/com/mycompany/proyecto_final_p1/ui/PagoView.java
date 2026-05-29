@@ -203,23 +203,35 @@ public class PagoView extends javax.swing.JFrame {
         int fila = jTable1.getSelectedRow();
         if (fila == -1) {
             JOptionPane.showMessageDialog(this,
-                "Selecciona un pago pendiente primero.",
-                "Aviso",
-                JOptionPane.WARNING_MESSAGE);
+                    "Selecciona un pago pendiente primero.",
+                    "Aviso",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        int idPago = (int) jTable1.getValueAt(fila, 0);
-        int idCobro = (int) jTable1.getValueAt(fila, 1);
+        int idPago = Integer.parseInt(jTable1.getValueAt(fila, 0).toString());
+
+// ID Cobro — puede ser null
+        int idCobro = 0;
+        Object valorCobro = jTable1.getValueAt(fila, 1);
+        if (valorCobro != null && !valorCobro.toString().isEmpty()) {
+            idCobro = Integer.parseInt(valorCobro.toString());
+        }
+
+// ID Cobro Casa — puede ser null
+        int idCobroCasa = 0;
+        Object valorCobroCasa = jTable1.getValueAt(fila, 2);
+        if (valorCobroCasa != null && !valorCobroCasa.toString().isEmpty()) {
+            idCobroCasa = Integer.parseInt(valorCobroCasa.toString());
+        }
 
         try {
-            boolean resultado = pago.registrarPago(idPago, idCobro);
+            boolean resultado = pago.registrarPago(idPago, idCobro, idCobroCasa);
             if (resultado) {
                 JOptionPane.showMessageDialog(this,
-                    "Pago registrado exitosamente!",
-                    "Éxito",
-                    JOptionPane.INFORMATION_MESSAGE);
-                // Refrescar la tabla
+                        "Pago registrado exitosamente!",
+                        "Éxito",
+                        JOptionPane.INFORMATION_MESSAGE);
                 int indice = jComboBox1.getSelectedIndex();
                 int idCasa = listarCasas.get(indice).getIdCasa();
                 cargarPagosPendientes(idCasa);
@@ -269,16 +281,17 @@ public class PagoView extends javax.swing.JFrame {
     
     private void cargarPagosPendientes(int idCasa) {
         DefaultTableModel modelo = new DefaultTableModel(
-                new String[]{"ID Pago", "ID Cobro", "Monto", "Estado"}, 0
+            new String[]{"ID Pago", "ID Cobro", "ID Cobro Casa", "Monto", "Estado"}, 0
         );
         try {
             List<Pago> datos = pago.listarPagosPendientes(idCasa);
             for (Pago p : datos) {
                 modelo.addRow(new Object[]{
-                    p.getIdPago(),
-                    p.getIdCobro(),
-                    p.getMontoPagado(),
-                    p.isPagado() ? "Pagado" : "Pendiente"
+                    p.getIdPago(),      // columna 0
+                    p.getIdCobro(),     // columna 1
+                    p.getIdCobroCasa(), // columna 2
+                    p.getMontoPagado(), // columna 3
+                    p.isPagado() ? "Pagado" : "Pendiente" // columna 4
                 });
             }
             jTable1.setModel(modelo);

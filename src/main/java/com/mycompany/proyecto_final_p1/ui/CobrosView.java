@@ -42,7 +42,6 @@ public class CobrosView extends javax.swing.JFrame {
         initComponents();
         cargarCuotas();
         cargarCasas();
-        cargarCuotasIndividual();
        /* try {
             java.sql.Connection con = Conexion.getConexion();
 
@@ -149,15 +148,13 @@ public class CobrosView extends javax.swing.JFrame {
         buttoncobrardos = new javax.swing.JButton();
         JComboboxTipoPago = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
-        jComboBoxCuotaIndividual = new javax.swing.JComboBox<>();
-        lblCuota = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel2.setBackground(new java.awt.Color(0, 51, 102));
 
-        jPanel1.setBackground(new java.awt.Color(234, 234, 243));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cobro general "));
 
         jLabel1.setText("Cantidad:");
@@ -225,6 +222,7 @@ public class CobrosView extends javax.swing.JFrame {
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Cobro de mensualidad");
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Cobro específico a una casa"));
 
         jLabel3.setText("Casa:");
@@ -244,58 +242,48 @@ public class CobrosView extends javax.swing.JFrame {
         buttoncobrardos.setText("Generar cobro");
         buttoncobrardos.addActionListener(this::buttoncobrardosActionPerformed);
 
-        JComboboxTipoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mensualidad", "Multa", "Mora" }));
+        JComboboxTipoPago.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Multa", "Mora" }));
         JComboboxTipoPago.addActionListener(this::JComboboxTipoPagoActionPerformed);
 
         jLabel2.setText("Tipo de cobro:");
-
-        jComboBoxCuotaIndividual.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBoxCuotaIndividual.addActionListener(this::jComboBoxCuotaIndividualActionPerformed);
-
-        lblCuota.setText("Mes y año:");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(168, 168, 168)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addContainerGap(195, Short.MAX_VALUE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jLabel8))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(lblCuota, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                        .addGap(18, 18, 18)))
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addGap(18, 18, 18)))
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(comboboxcasa, 0, 98, Short.MAX_VALUE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(Descripciondos)
-                                .addComponent(Monto)
-                                .addComponent(Dateinicio, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                                .addComponent(Datefin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(87, 87, 87)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(comboboxcasa, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(Descripciondos)
+                                    .addComponent(Monto)
+                                    .addComponent(Dateinicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(Datefin, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(JComboboxTipoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 1, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(66, 66, 66)
                         .addComponent(buttoncobrardos)
-                        .addGap(48, 48, 48))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JComboboxTipoPago, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBoxCuotaIndividual, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(227, 227, 227))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -308,32 +296,25 @@ public class CobrosView extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(JComboboxTipoPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBoxCuotaIndividual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCuota))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(Descripciondos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(9, 9, 9)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(Monto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel8))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(buttoncobrardos)
-                        .addGap(39, 39, 39))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel9)
-                            .addComponent(Dateinicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Datefin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10))
-                        .addGap(18, 18, 18))))
+                    .addComponent(jLabel8)
+                    .addComponent(Monto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9)
+                    .addComponent(Dateinicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel10)
+                    .addComponent(Datefin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(buttoncobrardos)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
 
         jButton1.setBackground(new java.awt.Color(204, 0, 0));
@@ -368,8 +349,8 @@ public class CobrosView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -434,59 +415,12 @@ public class CobrosView extends javax.swing.JFrame {
 //ejecuta la insercion en base de datos y da el ID autogenerado del cobro
             int respuesta = ad.realizarCobro(cobro);
 
-            if (respuesta != 1) {
+            if (respuesta != -1) {
                 PagoDAO dao = new PagoDAO();
                 try {
                     dao.generarPagos(respuesta);
-                   //asigna las deeudas por casa individual 
-                    CasaDAO casaDao = new CasaDAO();
-                    List<Casa> casas = casaDao.listarCasas();
-                    CobroindividualDAO cobrar = new CobroindividualDAO();
-                    for (Casa casa : casas) {
-
-                        Cobroindividual detalle
-                                = new Cobroindividual();
-
-                        detalle.setId_casa(
-                                casa.getIdCasa()
-                        );
-
-                        detalle.setPagado(false);
-
-                        detalle.setDescripcion(
-                                "Mensualidad"
-                        );
-
-                        detalle.setMonto(
-                                cuotaSeleccionada.getMonto()
-                        );
-
-                        detalle.setFechaInicio(
-                                fechaInicio
-                        );
-
-                        detalle.setFechaLimite(
-                                fechaLimite
-                        );
-
-                        detalle.setTipo_cobro(
-                                "Mensualidad"
-                        );
-
-                        detalle.setMes(
-                                cuotaSeleccionada.getMes()
-                        );
-
-                        detalle.setAnio(
-                                cuotaSeleccionada.getAnio()
-                        );
-
-                         cobrar.insertarCobro(detalle);
-
-                    }
-                            
                 } catch (SQLException ex) {
-                    System.getLogger(CobrosView.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+                    JOptionPane.showMessageDialog(this, "Error generando pagos: " + ex.getMessage());
                 }
                 limpiarCampos();
             }
@@ -500,138 +434,79 @@ public class CobrosView extends javax.swing.JFrame {
 
     private void buttoncobrardosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttoncobrardosActionPerformed
 
-        
-    try {
+        try {
 
-        CobroindividualDAO cobrar
-                = new CobroindividualDAO();
+            CobroindividualDAO cobrar
+                    = new CobroindividualDAO();
 
-        Cobroindividual cobro
-                = new Cobroindividual();
+            Cobroindividual cobro
+                    = new Cobroindividual();
 
-        String tipo = JComboboxTipoPago
-                .getSelectedItem()
-                .toString();
-                cobro.setTipo_cobro(tipo);
+            String tipo = JComboboxTipoPago
+                    .getSelectedItem()
+                    .toString();
+            cobro.setTipo_cobro(tipo);
 
-        int indice = comboboxcasa.getSelectedIndex();
+            int indice = comboboxcasa.getSelectedIndex();
 
-        Cobroindividual casaSeleccionada = listaCasas.get(indice);
+            Cobroindividual casaSeleccionada = listaCasas.get(indice);
 
-        cobro.setId_casa(
-                casaSeleccionada.getId_casa()
-        );
-
-        if (tipo.equals("Mensualidad")) {
-
-            Descripciondos.setText(
-                    "Mensualidad"
-            );
-        }
-
-        cobro.setDescripcion(
-                Descripciondos.getText()
-        );
-
-        cobro.setMonto(
-                Integer.parseInt(
-                        Monto.getText()
-                )
-        );
-
-        cobro.setFechaInicio(
-                new java.sql.Date(
-                        Dateinicio
-                                .getDate()
-                                .getTime()
-                )
-        );
-
-        cobro.setFechaLimite(
-                new java.sql.Date(
-                        Datefin
-                                .getDate()
-                                .getTime()
-                )
-        );
-
-        System.out.println(
-                "ID CASA: "
-                + casaSeleccionada.getId_casa());
-               
-               
-            //validar que la casa no tenga ya un cobro de mes
-        if (tipo.equals("Mensualidad")) {
-
-            int indiceCuota = jComboBoxCuotaIndividual.getSelectedIndex();
-
-            Cuota cuotaSeleccionada = listaCuotas.get(indiceCuota);
-
-            cobro.setMes(
-                    cuotaSeleccionada.getMes()
+            cobro.setId_casa(
+                    casaSeleccionada.getId_casa()
             );
 
-            cobro.setAnio(
-                    cuotaSeleccionada.getAnio()
+            cobro.setDescripcion(
+                    Descripciondos.getText()
             );
-            
-            System.out.println(
-                    cobro.getId_casa()
+
+            cobro.setMonto(
+                    Integer.parseInt(
+                            Monto.getText()
+                    )
+            );
+
+            cobro.setFechaInicio(
+                    new java.sql.Date(
+                            Dateinicio
+                                    .getDate()
+                                    .getTime()
+                    )
+            );
+
+            cobro.setFechaLimite(
+                    new java.sql.Date(
+                            Datefin
+                                    .getDate()
+                                    .getTime()
+                    )
             );
 
             System.out.println(
-                    cobro.getMes()
-            );
+                    "ID CASA: "
+                    + casaSeleccionada.getId_casa());
 
-            System.out.println(
-                    cobro.getAnio()
-            );
-
-            System.out.println(
-                    cobro.getTipo_cobro()
-            );
-            boolean existe = cobrar.existeMensualidad(
-                            cobro.getId_casa(),
-                            cobro.getMes(),
-                            cobro.getAnio()
-                    );
-
-            if (existe) {
+            boolean guardado = cobrar.insertarCobro(cobro);
+            if (guardado) {
 
                 JOptionPane.showMessageDialog(
                         null,
-                        "La mensualidad ya existe"
+                        "Cobro guardado"
                 );
 
-                return;
-
-            }
-
-        }
-        
-                
-              boolean guardado = cobrar.insertarCobro(cobro);
-              if (guardado) {
-
-            JOptionPane.showMessageDialog(
-                    null,
-                    "Cobro guardado"
-            );
-
-        } else {
-
-            JOptionPane.showMessageDialog(
-                    null,
-                    "No se pudo guardar");
-            }
-    } catch (Exception e) {
+            } else {
 
                 JOptionPane.showMessageDialog(
                         null,
-                        e.getMessage()
-                );
-
+                        "No se pudo guardar");
             }
+        } catch (Exception e) {
+
+            JOptionPane.showMessageDialog(
+                    null,
+                    e.getMessage()
+            );
+
+        }
     }//GEN-LAST:event_buttoncobrardosActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -643,39 +518,8 @@ public class CobrosView extends javax.swing.JFrame {
     }//GEN-LAST:event_comboboxcasaActionPerformed
 
     private void JComboboxTipoPagoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JComboboxTipoPagoActionPerformed
-          String tipo = JComboboxTipoPago.getSelectedItem().toString();
-
-        if (tipo.equals("Mensualidad")) {
-
-            jComboBoxCuotaIndividual
-                    .setVisible(true);
-
-            lblCuota
-                    .setVisible(true);
-
-            Descripciondos.setText("Mensualidad");
-
-            Descripciondos.setEditable(
-                    false
-            );
-
-        } else {
-
-            jComboBoxCuotaIndividual
-                    .setVisible(false);
-
-            lblCuota
-                    .setVisible(false);
-
-            repaint();
-            revalidate();
-            Descripciondos.setText("");
-
-            Descripciondos.setEditable(
-                    true
-            );
-
-        }
+        Descripciondos.setText("");
+        Descripciondos.setEditable(true);
     }//GEN-LAST:event_JComboboxTipoPagoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -684,10 +528,6 @@ public class CobrosView extends javax.swing.JFrame {
         ventana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void jComboBoxCuotaIndividualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxCuotaIndividualActionPerformed
-     
-    }//GEN-LAST:event_jComboBoxCuotaIndividualActionPerformed
     
     private void cargarCuotas() {
             try {
@@ -766,7 +606,6 @@ public class CobrosView extends javax.swing.JFrame {
     private com.toedter.calendar.JDateChooser jCalendarInicio;
     private com.toedter.calendar.JDateChooser jCalendarLimite;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBoxCuotaIndividual;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -781,7 +620,6 @@ public class CobrosView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JProgressBar jProgressBar1;
-    private javax.swing.JLabel lblCuota;
     // End of variables declaration//GEN-END:variables
 
     private void cargarCasas() {
@@ -801,23 +639,5 @@ public class CobrosView extends javax.swing.JFrame {
 
         }
     }
-    
-    private void cargarCuotasIndividual() {
-
-    jComboBoxCuotaIndividual.removeAllItems();
-
-    for (Cuota c : listaCuotas) {
-
-        jComboBoxCuotaIndividual.addItem(
-            c.getAnio()
-            + " - "
-            + getNombreMes(c.getMes())
-            + " Q."
-            + c.getMonto()
-        );
-
-    }
-
-}
 
 }

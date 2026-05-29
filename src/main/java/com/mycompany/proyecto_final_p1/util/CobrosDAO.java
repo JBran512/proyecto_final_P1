@@ -12,7 +12,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  *
@@ -68,5 +70,25 @@ public class CobrosDAO {
             JOptionPane.showMessageDialog(null, "No se completo el proceso", "Cobros", JOptionPane.INFORMATION_MESSAGE);
         }
         return null;
+    }
+    
+    public List<Cobros> listarCobros() throws SQLException {
+        List<Cobros> lista = new ArrayList<>();
+        try {
+            Connection con = Conexion.getConexion();
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM cobros");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Cobros c = new Cobros();
+                c.setIdCobro(rs.getInt("id_cobro"));
+                c.setFechaInicio(rs.getDate("fechaInicio"));
+                c.setFechaLimite(rs.getDate("fechaLimite"));
+                c.setIdCuota(rs.getInt("id_cuota"));
+                lista.add(c);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return lista;
     }
 }
