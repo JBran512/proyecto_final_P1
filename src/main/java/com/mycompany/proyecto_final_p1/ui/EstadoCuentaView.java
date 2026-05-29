@@ -47,7 +47,7 @@ private void cargarCasasComboBox() {
     }
 
     private void cargarEstadoCuentaTabla(int idCasa) {
-        String[] columnas = {"Año", "Mes", "Monto Cuota", "Monto Pagado", "Estado"};
+        String[] columnas = {"Año", "Mes", "Monto", "Monto Pagado", "Tipo", "Estado"};
         javax.swing.table.DefaultTableModel modelo = new javax.swing.table.DefaultTableModel(columnas, 0);
         
         try {
@@ -281,11 +281,11 @@ private void cargarCasasComboBox() {
                 documento.add(new com.lowagie.text.Paragraph(" "));
 
                 // Tabla
-                com.lowagie.text.pdf.PdfPTable tablaPDF = new com.lowagie.text.pdf.PdfPTable(5);
+                com.lowagie.text.pdf.PdfPTable tablaPDF = new com.lowagie.text.pdf.PdfPTable(6);
                 tablaPDF.setWidthPercentage(100);
 
                 // Encabezados con fondo azul
-                String[] columnas = {"Año", "Mes", "Monto Cuota", "Monto Pagado", "Estado"};
+                String[] columnas = {"Año", "Mes", "Monto", "Monto Pagado", "Tipo", "Estado"};
                 for (String col : columnas) {
                     com.lowagie.text.pdf.PdfPCell celda = new com.lowagie.text.pdf.PdfPCell(
                             new com.lowagie.text.Phrase(col, fuenteBlanca));
@@ -301,7 +301,7 @@ private void cargarCasasComboBox() {
                 int totalPagado = 0;
 
                 for (int i = 0; i < filasTabla; i++) {
-                    for (int j = 0; j < 5; j++) {
+                    for (int j = 0; j < 6; j++) {
                         com.lowagie.text.pdf.PdfPCell celda = new com.lowagie.text.pdf.PdfPCell(
                                 new com.lowagie.text.Phrase(
                                         jTableEstadoCuenta.getValueAt(i, j).toString(), fuenteNormal));
@@ -309,7 +309,7 @@ private void cargarCasasComboBox() {
                             celda.setBackgroundColor(new java.awt.Color(235, 241, 255));
                         }
                         // Colorear estado
-                        if (j == 4) {
+                        if (j == 5) {
                             String estado = jTableEstadoCuenta.getValueAt(i, j).toString();
                             if (estado.equals("Pendiente")) {
                                 celda.setBackgroundColor(new java.awt.Color(255, 220, 220));

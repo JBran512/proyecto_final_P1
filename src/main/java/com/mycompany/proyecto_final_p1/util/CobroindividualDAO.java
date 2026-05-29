@@ -55,29 +55,37 @@ public class CobroindividualDAO {
    return casas;
 }
     
-     public boolean insertarCobro(Cobroindividual cobro) throws SQLException{
-       try{
-           Connection con = Conexion.getConexion();
-           PreparedStatement ps = con.prepareStatement(
-                "INSERT INTO cobro_casa (id_casa, pagado,  descripcion, fechaInicio, fechaLimite, monto, tipo_cobro, mes, anio) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+     public boolean insertarCobro(Cobroindividual cobro) throws SQLException {
+        try {
+            Connection con = Conexion.getConexion();
+            PreparedStatement ps = con.prepareStatement(
+                    "INSERT INTO cobro_casa (id_casa, descripcion, fechaInicio, fechaLimite, monto, tipo_cobro, mes, anio) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                    Statement.RETURN_GENERATED_KEYS
             );
-           ps.setInt(1, cobro.getId_casa());
-           ps.setBoolean(2, false);
-           ps.setString(3, cobro.getDescripcion());
-           ps.setDate(4, cobro.getFechaInicio());
-           ps.setDate(5, cobro.getFechaLimite());
-           ps.setInt(6, cobro.getMonto());
-           ps.setString(7, cobro.getTipo_cobro());
-           ps.setInt(8, cobro.getMes());
-           ps.setInt(9, cobro.getAnio());
-           return ps.executeUpdate() > 0;
-       } catch (SQLException e) {
+            ps.setInt(1, cobro.getId_casa());
+            ps.setString(2, cobro.getDescripcion());
+            ps.setDate(3, cobro.getFechaInicio());
+            ps.setDate(4, cobro.getFechaLimite());
+            ps.setInt(5, cobro.getMonto());
+            ps.setString(6, cobro.getTipo_cobro());
+            ps.setInt(7, cobro.getMes());
+            ps.setInt(8, cobro.getAnio());
+            if (ps.executeUpdate() > 0) {
+                ResultSet rs = ps.getGeneratedKeys();
+                if (rs.next()) {
+                    int idCobroCasa = rs.getInt(1);
+                    PagoDAO pagoDAO = new PagoDAO();
+                    pagoDAO.generarPagoIndividual(idCobroCasa, cobro.getId_casa());
+                }
+                return true;
+            }
+        } catch (SQLException e) {
             JOptionPane.showMessageDialog(null,
-                "Error al guardar el cobro: " + e.getMessage(),
-                "Error",
-                JOptionPane.ERROR_MESSAGE);
+                    "Error al guardar el cobro: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
         }
-       return false;
+        return false;
     }
      
     public boolean existeMensualidad(int idCasa, int mes,int anio) {

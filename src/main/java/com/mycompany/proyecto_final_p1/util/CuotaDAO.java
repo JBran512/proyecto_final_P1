@@ -108,41 +108,48 @@ public class CuotaDAO {
         return false;
     }
     public List<String[]> obtenerEstadoCuentaPorCasa(int idCasa) throws SQLException {
-    List<String[]> lista = new ArrayList<>();
-    
-    // Consulta exacta uniendo la cuota general, el cobro y el pago asignado a la casa
-    String sql = "SELECT c.anio, c.mes, c.monto, p.monto_pagado, p.pagado " +
-                 "FROM cuota c " +
-                 "INNER JOIN cobros cb ON c.id_cuota = cb.id_cuota " +
-                 "INNER JOIN pago p ON cb.id_cobro = p.id_cobro " +
-                 "WHERE p.id_casa = ? " +
-                 "ORDER BY c.anio DESC, c.mes DESC";
-                 
-    try {
-        Connection con = Conexion.getConexion();
-        PreparedStatement ps = con.prepareStatement(sql);
-        ps.setInt(1, idCasa);
-        ResultSet rs = ps.executeQuery();
-        
-        String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", 
-                          "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
-        
-        while (rs.next()) {
-            String anio = String.valueOf(rs.getInt("anio"));
-            int numMes = rs.getInt("mes");
-            String mesNombre = (numMes >= 1 && numMes <= 12) ? meses[numMes - 1] : "Mes " + numMes;
-            
-            String montoCuota = "Q." + rs.getInt("monto");
-            String montoPagado = "Q." + rs.getInt("monto_pagado");
-            
-            boolean esPagado = rs.getBoolean("pagado");
-            String estado = esPagado ? "Pagado" : "Pendiente";
-            
-            lista.add(new String[]{anio, mesNombre, montoCuota, montoPagado, estado});
+        List<String[]> lista = new ArrayList<>();
+
+        String sql
+                = // Cobros mensuales
+                "SELECT c.anio, c.mes, c.monto, p.monto_pagado, p.pagado, 'Mensualidad' as tipo " +
+                "FROM cuota c " +
+                "INNER JOIN cobros cb ON c.id_cuota = cb.id_cuota " +
+                "INNER JOIN pago p ON cb.id_cobro = p.id_cobro " +
+                "WHERE p.id_casa = ? " +
+                "UNION ALL " +
+                // Cobros individuales
+                "SELECT YEAR(cc.fechaInicio) as anio, MONTH(cc.fechaInicio) as mes, cc.monto, p.monto_pagado, p.pagado, cc.tipo_cobro as tipo " +
+                "FROM cobro_casa cc " +
+                "INNER JOIN pago p ON cc.id_cobro_casa = p.id_cobro_casa " +
+                "WHERE p.id_casa = ? " +
+                "ORDER BY anio DESC, mes DESC";
+
+        try {
+            Connection con = Conexion.getConexion();
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, idCasa);
+            ps.setInt(2, idCasa);
+            ResultSet rs = ps.executeQuery();
+
+            String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+                "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+
+            while (rs.next()) {
+                String anio = String.valueOf(rs.getInt("anio"));
+                int numMes = rs.getInt("mes");
+                String mesNombre = (numMes >= 1 && numMes <= 12) ? meses[numMes - 1] : "Cobro individual";
+                String montoCuota = "Q." + rs.getInt("monto");
+                String montoPagado = "Q." + rs.getInt("monto_pagado");
+                String tipo = rs.getString("tipo");
+                boolean esPagado = rs.getBoolean("pagado");
+                String estado = esPagado ? "Pagado" : "Pendiente";
+
+                lista.add(new String[]{anio, mesNombre, montoCuota, montoPagado, tipo, estado});
+            }
+        } catch (SQLException e) {
+            System.out.println("Error en Estado de Cuenta: " + e.getMessage());
         }
-    } catch (SQLException e) {
-        System.out.println("Error en Estado de Cuenta: " + e.getMessage());
+        return lista;
     }
-    return lista;
-}
 }
