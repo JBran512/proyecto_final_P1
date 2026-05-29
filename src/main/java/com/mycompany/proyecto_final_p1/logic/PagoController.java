@@ -10,14 +10,14 @@ package com.mycompany.proyecto_final_p1.logic;
  */
 
 public class PagoController {
-
+//atributos
     private String metodoPago;
     private String estadoPago;
     private String fechaPago;
     private int idPago;
     private int idCliente;
     private double montoPagado;
-
+//constructor que inicia un obejto de tipo pago con los datos completos
     public PagoController(String metodoPago, String estadoPago, String fechaPago, int idPago, int idCliente, double montoPagado) {
         this.metodoPago = metodoPago;
         this.estadoPago = estadoPago;
@@ -26,7 +26,7 @@ public class PagoController {
         this.idCliente = idCliente;
         this.montoPagado = montoPagado;
     }
-
+//metodos de acceso
     public int getIdCliente() {
         return idCliente;
     }

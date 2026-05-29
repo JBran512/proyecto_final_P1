@@ -15,7 +15,7 @@ public class Cobros {
     private int idCuota;
     private Date fechaInicio;
     private Date fechaLimite;
-    private int createdBy;
+    private int createdBy; //ID del admin que generó el cobro por cuestiones de auditoria
     private int mes;
     private int anio;
 
@@ -29,7 +29,7 @@ public class Cobros {
     public Cobros() {
     }
     
-    
+    //metodos de acceso
 
     public int getIdCobro() {
         return idCobro;

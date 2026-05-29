@@ -10,6 +10,8 @@ import java.sql.Date;
  *
  * @author Chriss
  */
+
+// representa la couta individual asignada a una casa espcifica incluyendo montos, fechas y estado de la deuda
 public class Cobroindividual {
     private int id_cobro_casa;
     private int numero_casa;
@@ -22,15 +24,15 @@ public class Cobroindividual {
     private String tipo_cobro;
     private int mes;
     private int anio;
-
+// el constructor vacio es necesario para el mapeo automatico desde la base de datos
     public Cobroindividual() {
     }
-
+//inicia un cobro y lo vincula a la casa especifica apoyandose del ID y numero de casa
     public Cobroindividual(int id_casa, int numero_casa) {
         this.id_casa = id_casa;
         this.numero_casa = numero_casa;
     }
-
+// recupera los regristros existentes desde la base de datos
     public Cobroindividual(int id_cobro_casa, int numero_casa, int id_casa, boolean pagado, String descripcion, int monto, Date fechaInicio, Date fechaLimite, String tipo_cobro, int mes, int anio) {
         this.id_cobro_casa = id_cobro_casa;
         this.numero_casa = numero_casa;
@@ -45,7 +47,7 @@ public class Cobroindividual {
         this.anio = anio;
     }
 
-
+//metodos de acceso
     public int getId_cobro_casa() {
         return id_cobro_casa;
     }
