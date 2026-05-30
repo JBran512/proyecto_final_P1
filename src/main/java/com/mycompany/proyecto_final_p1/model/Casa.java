@@ -15,6 +15,8 @@ public class Casa {
     private int idPropietario;
     private int idCondominio;
     private int createdBy;
+    private int updatedBy;
+
 
     // Constructor para insertar, ID casa es generado automaticamente por la base de datos
     public Casa(int numeroCasa, int idPropietario, int idCondominio) {
@@ -65,5 +67,12 @@ public class Casa {
     }
     public void setCreatedBy(int createdBy){
         this.createdBy = createdBy;
+    }
+    public int getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(int updatedBy) {
+        this.updatedBy = updatedBy;
     }
 }

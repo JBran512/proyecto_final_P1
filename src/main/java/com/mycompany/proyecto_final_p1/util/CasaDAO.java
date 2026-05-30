@@ -133,12 +133,13 @@ public class CasaDAO {
         try {
             Connection con = Conexion.getConexion();
             PreparedStatement ps = con.prepareStatement(
-                "UPDATE casa SET numero_casa = ?, id_propietario = ?, id_condominio = ? WHERE id_casa = ?"
+                "UPDATE casa SET numero_casa = ?, id_propietario = ?, id_condominio = ?, updated_by = ? WHERE id_casa = ?"
             );
             ps.setInt(1, casa.getNumeroCasa());
             ps.setInt(2, casa.getIdPropietario());
             ps.setInt(3, casa.getIdCondominio());
-            ps.setInt(4, casa.getIdCasa());
+            ps.setInt(4, casa.getUpdatedBy());
+            ps.setInt(5, casa.getIdCasa());
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             System.out.println("Error: " + e.getMessage());

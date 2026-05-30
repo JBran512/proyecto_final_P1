@@ -95,6 +95,7 @@ public class ConsultaPagos extends javax.swing.JFrame {
         jButton2.setBackground(new java.awt.Color(204, 0, 0));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("REGRESAR AL MENÚ");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         btnDescargarPDF.setText("DESCARGAR");
         btnDescargarPDF.addActionListener(this::btnDescargarPDFActionPerformed);
@@ -405,6 +406,13 @@ public class ConsultaPagos extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_btnDescargarPDFActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        Menu ventana = new Menu();
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
     
     private String getNombreMes(int mes) {
         String[] meses = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",

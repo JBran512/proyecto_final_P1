@@ -5,8 +5,14 @@
 package com.mycompany.proyecto_final_p1.ui;
 
 import com.mycompany.proyecto_final_p1.model.Casa;
+import com.mycompany.proyecto_final_p1.model.Condominio;
+import com.mycompany.proyecto_final_p1.model.Propietario;
+import com.mycompany.proyecto_final_p1.model.Sesion;
 import com.mycompany.proyecto_final_p1.util.CasaDAO;
+import com.mycompany.proyecto_final_p1.util.CondominioDAO;
+import com.mycompany.proyecto_final_p1.util.PropietarioDAO;
 import java.sql.SQLException;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -14,6 +20,8 @@ import javax.swing.JOptionPane;
  * @author Admin
  */
 public class ModificarCasaDialog extends javax.swing.JDialog {
+    private List<Propietario> listaPropietarios;
+    private List<Condominio> listaCondominios;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(ModificarCasaDialog.class.getName());
 
@@ -27,7 +35,31 @@ public class ModificarCasaDialog extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         this.idCasaSeleccionada = idCasa;
+        cargarPropietarios();
+        cargarCondominios();
         cargarDatos(idCasa);
+    }
+    
+    private void cargarCondominios() {
+        try {
+            cmbCondominio.removeAllItems();
+            CondominioDAO dao = new CondominioDAO();
+            listaCondominios = dao.listarTodos();
+            for (Condominio c : listaCondominios) {
+                cmbCondominio.addItem(c.getNombreCondominio());
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }
+    
+    private void cargarPropietarios() {
+        cmbPropietario.removeAllItems();
+        PropietarioDAO dao = new PropietarioDAO();
+        listaPropietarios = dao.listarTodos();
+        for (Propietario p : listaPropietarios) {
+            cmbPropietario.addItem(p.getNombre());
+        }
     }
 
     /**
@@ -48,8 +80,8 @@ public class ModificarCasaDialog extends javax.swing.JDialog {
         jLabel2 = new javax.swing.JLabel();
         txtNumeroCasa = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtIdPropietario = new javax.swing.JTextField();
-        txtIdCondominio = new javax.swing.JTextField();
+        cmbPropietario = new javax.swing.JComboBox<>();
+        cmbCondominio = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -65,12 +97,17 @@ public class ModificarCasaDialog extends javax.swing.JDialog {
         jButton2.setBackground(new java.awt.Color(204, 0, 0));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("CANCELAR");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         jLabel1.setText("NÚMERO DE CASA:");
 
         jLabel2.setText("PROPIETARIO: ");
 
         jLabel3.setText("CONDOMINIO:");
+
+        cmbPropietario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbCondominio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -96,9 +133,9 @@ public class ModificarCasaDialog extends javax.swing.JDialog {
                         .addGap(2, 2, 2)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNumeroCasa)
-                    .addComponent(txtIdPropietario)
-                    .addComponent(txtIdCondominio, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNumeroCasa, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                    .addComponent(cmbPropietario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbCondominio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -113,11 +150,12 @@ public class ModificarCasaDialog extends javax.swing.JDialog {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(txtIdPropietario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbPropietario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(15, 15, 15)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(txtIdCondominio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cmbCondominio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(3, 3, 3))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addGap(25, 25, 25)
@@ -160,21 +198,38 @@ public class ModificarCasaDialog extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
+            if (txtNumeroCasa.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                        "Por favor ingresa el número de casa.",
+                        "Aviso",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            int indicePropietario = cmbPropietario.getSelectedIndex();
+            int indiceCondominio = cmbCondominio.getSelectedIndex();
+
             Casa c = new Casa();
             c.setIdCasa(idCasaSeleccionada);
             c.setNumeroCasa(Integer.parseInt(txtNumeroCasa.getText()));
-            c.setIdPropietario(Integer.parseInt(txtIdPropietario.getText()));
-            c.setIdCondominio (Integer.parseInt(txtIdCondominio.getText()));
+            c.setIdPropietario(listaPropietarios.get(indicePropietario).getIdPropietario());
+            c.setIdCondominio(listaCondominios.get(indiceCondominio).getIdCondominio());
+            c.setUpdatedBy(Sesion.getIdUsuario());
 
             CasaDAO dao = new CasaDAO();
             dao.actualizar(c);
-
             JOptionPane.showMessageDialog(this, "Casa actualizada!");
             this.dispose();
+
         } catch (SQLException e) {
-            System.out.println("Error: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -214,18 +269,34 @@ public class ModificarCasaDialog extends javax.swing.JDialog {
     }
     
     private void cargarDatos(int idCasa) {
-    try {
-        CasaDAO dao = new CasaDAO();
-        Casa c = dao.buscarPorId(idCasa);
-        txtNumeroCasa.setText(String.valueOf(c.getNumeroCasa()));
-        txtIdPropietario.setText(String.valueOf(c.getIdPropietario()));
-        txtIdCondominio.setText (String.valueOf(c.getIdCondominio()));
-    } catch (SQLException e) {
-        System.out.println("Error: " + e.getMessage());
+        try {
+            CasaDAO dao = new CasaDAO();
+            Casa c = dao.buscarPorId(idCasa);
+            txtNumeroCasa.setText(String.valueOf(c.getNumeroCasa()));
+
+            // Seleccionar propietario correcto en el combo
+            for (int i = 0; i < listaPropietarios.size(); i++) {
+                if (listaPropietarios.get(i).getIdPropietario() == c.getIdPropietario()) {
+                    cmbPropietario.setSelectedIndex(i);
+                    break;
+                }
+            }
+
+            // Seleccionar condominio correcto en el combo
+            for (int i = 0; i < listaCondominios.size(); i++) {
+                if (listaCondominios.get(i).getIdCondominio() == c.getIdCondominio()) {
+                    cmbCondominio.setSelectedIndex(i);
+                    break;
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbCondominio;
+    private javax.swing.JComboBox<String> cmbPropietario;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -234,8 +305,6 @@ public class ModificarCasaDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txtIdCondominio;
-    private javax.swing.JTextField txtIdPropietario;
     private javax.swing.JTextField txtNumeroCasa;
     // End of variables declaration//GEN-END:variables
 }
