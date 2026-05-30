@@ -53,6 +53,8 @@ public class Menu extends javax.swing.JFrame {
         jMenu_Casas_Morosas = new javax.swing.JMenuItem();
         jSeparator6 = new javax.swing.JPopupMenu.Separator();
         jMenu_Estado_de_Cuenta = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
+        jReporte_General = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -71,7 +73,7 @@ public class Menu extends javax.swing.JFrame {
         gridBagConstraints.insets = new java.awt.Insets(42, 79, 42, 80);
         jPanel2.add(jLabel1, gridBagConstraints);
 
-        jMenu_Archivo.setText("Archivo");
+        jMenu_Archivo.setText("Ajustes");
         jMenu_Archivo.add(jSeparator3);
 
         jMenu_Salir1.setText("Salir");
@@ -153,6 +155,15 @@ public class Menu extends javax.swing.JFrame {
             }
         });
         jMenu_Reportes.add(jMenu_Estado_de_Cuenta);
+        jMenu_Reportes.add(jSeparator7);
+
+        jReporte_General.setText("Reporte General");
+        jReporte_General.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jReporte_GeneralActionPerformed(evt);
+            }
+        });
+        jMenu_Reportes.add(jReporte_General);
 
         jMenuBar1.add(jMenu_Reportes);
 
@@ -249,6 +260,7 @@ public class Menu extends javax.swing.JFrame {
         CuotaView ventanaCuota = new CuotaView();
         ventanaCuota.setLocationRelativeTo(this);
         ventanaCuota.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void jMenu_Estado_de_CuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu_Estado_de_CuentaActionPerformed
@@ -257,6 +269,13 @@ public class Menu extends javax.swing.JFrame {
         ventana.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jMenu_Estado_de_CuentaActionPerformed
+
+    private void jReporte_GeneralActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jReporte_GeneralActionPerformed
+        ConsultaPagos ventana = new ConsultaPagos();
+        ventana.setLocationRelativeTo(this);
+        ventana.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jReporte_GeneralActionPerformed
 
     /**
      * @param args the command line arguments
@@ -299,10 +318,12 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu_Reportes;
     private javax.swing.JMenuItem jMenu_Salir1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JMenuItem jReporte_General;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
     private javax.swing.JPopupMenu.Separator jSeparator5;
     private javax.swing.JPopupMenu.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
     // End of variables declaration//GEN-END:variables
 }

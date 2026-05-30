@@ -17,7 +17,7 @@ import java.io.IOException;
 public class Conexion {
     private static Connection conexion = null;
     public static Connection getConexion() throws SQLException{
-          if (conexion == null){
+          if (conexion == null || conexion.isClosed()) {
               try {
                   Properties props = new Properties();
                   InputStream input = Conexion.class.getClassLoader().getResourceAsStream("db.properties");

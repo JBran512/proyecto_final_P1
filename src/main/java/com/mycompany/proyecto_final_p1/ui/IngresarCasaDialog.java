@@ -5,9 +5,14 @@
 package com.mycompany.proyecto_final_p1.ui;
 
 import com.mycompany.proyecto_final_p1.model.Casa;
+import com.mycompany.proyecto_final_p1.model.Condominio;
+import com.mycompany.proyecto_final_p1.model.Propietario;
 import com.mycompany.proyecto_final_p1.model.Sesion;
 import com.mycompany.proyecto_final_p1.util.CasaDAO;
+import com.mycompany.proyecto_final_p1.util.CondominioDAO;
+import com.mycompany.proyecto_final_p1.util.PropietarioDAO;
 import java.sql.SQLException;
+import java.util.List;
 import javax.swing.JOptionPane;
 
 /**
@@ -15,6 +20,8 @@ import javax.swing.JOptionPane;
  * @author Admin
  */
 public class IngresarCasaDialog extends javax.swing.JDialog {
+    private List<Propietario> listaPropietarios;
+    private List<Condominio> listaCondominios;
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(IngresarCasaDialog.class.getName());
 
@@ -24,7 +31,28 @@ public class IngresarCasaDialog extends javax.swing.JDialog {
     public IngresarCasaDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        cargarPropietarios();
+        cargarCondominios();
     }
+    private void cargarPropietarios() {
+        PropietarioDAO dao = new PropietarioDAO();
+        listaPropietarios = dao.listarTodos();
+        for (Propietario p : listaPropietarios) {
+            cmbPropietario.addItem(p.getNombre());
+        }
+    }
+    private void cargarCondominios() {
+        try {
+            CondominioDAO dao = new CondominioDAO();
+            listaCondominios = dao.listarTodos();
+            for (Condominio c : listaCondominios) {
+                cmbCondominio.addItem(c.getNombreCondominio());
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        }
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,10 +70,10 @@ public class IngresarCasaDialog extends javax.swing.JDialog {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         txtNumeroCasa = new javax.swing.JTextField();
-        txtIdPropietario = new javax.swing.JTextField();
-        txtIdCondominio = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        cmbPropietario = new javax.swing.JComboBox<>();
+        cmbCondominio = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -69,6 +97,10 @@ public class IngresarCasaDialog extends javax.swing.JDialog {
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("CANCELAR");
 
+        cmbPropietario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbCondominio.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -85,16 +117,14 @@ public class IngresarCasaDialog extends javax.swing.JDialog {
                         .addComponent(jLabel1)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel4))
+                    .addComponent(jLabel4)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtNumeroCasa)
-                    .addComponent(txtIdPropietario)
-                    .addComponent(txtIdCondominio, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNumeroCasa, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE)
+                    .addComponent(cmbPropietario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbCondominio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(31, 31, 31))
         );
         jPanel2Layout.setVerticalGroup(
@@ -109,11 +139,11 @@ public class IngresarCasaDialog extends javax.swing.JDialog {
                         .addGap(9, 9, 9)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3)
-                            .addComponent(txtIdPropietario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(cmbPropietario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
-                            .addComponent(txtIdCondominio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(cmbCondominio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -155,29 +185,43 @@ public class IngresarCasaDialog extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-            try {
-            if (txtNumeroCasa.getText().isEmpty() || txtIdPropietario.getText().isEmpty()) {
+        try {
+            if (txtNumeroCasa.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this,
-                    "Por favor completa todos los campos.",
-                    "Aviso",
-                    JOptionPane.WARNING_MESSAGE);
+                        "Por favor completa todos los campos.",
+                        "Aviso",
+                        JOptionPane.WARNING_MESSAGE);
                 return;
             }
 
+            // Obtener ids de los combos
+            int indicePropietario = cmbPropietario.getSelectedIndex();
+            int indiceCondominio = cmbCondominio.getSelectedIndex();
+
+            if (indicePropietario == -1 || indiceCondominio == -1) {
+                JOptionPane.showMessageDialog(this,
+                        "Por favor selecciona propietario y condominio.",
+                        "Aviso",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+
+            int idPropietario = listaPropietarios.get(indicePropietario).getIdPropietario();
+            int idCondominio = listaCondominios.get(indiceCondominio).getIdCondominio();
+
             Casa c = new Casa(
-                Integer.parseInt(txtNumeroCasa.getText()),
-                Integer.parseInt(txtIdPropietario.getText()),
-                Integer.parseInt(txtIdCondominio.getText())
+                    Integer.parseInt(txtNumeroCasa.getText()),
+                    idPropietario,
+                    idCondominio
             );
             c.setCreatedBy(Sesion.getIdUsuario());
 
             CasaDAO dao = new CasaDAO();
-
             if (dao.existeNumero(c.getNumeroCasa())) {
                 JOptionPane.showMessageDialog(this,
-                    "Ya existe una casa con ese número.",
-                    "Error",
-                    JOptionPane.ERROR_MESSAGE);
+                        "Ya existe una casa con ese número.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
                 return;
             }
 
@@ -228,6 +272,8 @@ public class IngresarCasaDialog extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> cmbCondominio;
+    private javax.swing.JComboBox<String> cmbPropietario;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -236,8 +282,6 @@ public class IngresarCasaDialog extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField txtIdCondominio;
-    private javax.swing.JTextField txtIdPropietario;
     private javax.swing.JTextField txtNumeroCasa;
     // End of variables declaration//GEN-END:variables
 }
