@@ -86,42 +86,46 @@ public class PagoDAO {
         return lista;
     }
     public List<Pago> listarPagosPorCobro(int idCobro) throws SQLException {
-    List<Pago> lista = new ArrayList<>();
-    try {
-        Connection con = Conexion.getConexion();
-        // Unimos pago con cobros y cuotas para tener acceso tanto a lo pagado como al valor de la cuota original
-        PreparedStatement ps = con.prepareStatement(
-            "SELECT p.id_pago, p.id_casa, p.id_cobro, p.monto_pagado, p.pagado, " +
-            "c.monto as monto_cuota " +
-            "FROM pago p " +
-            "INNER JOIN cobros co ON p.id_cobro = co.id_cobro " +
-            "INNER JOIN cuota c ON co.id_cuota = c.id_cuota " +
-            "WHERE p.id_cobro = ?"
-        );
-        ps.setInt(1, idCobro);
-        ResultSet rs = ps.executeQuery();
-        
-        while (rs.next()) {
-            Pago p = new Pago();
-            p.setIdPago(rs.getInt("id_pago"));
-            p.setIdCasa(rs.getInt("id_casa"));
-            p.setIdCobro(rs.getInt("id_cobro"));
-            p.setPagado(rs.getBoolean("pagado"));
-            
-            // Lógica de negocio
-            if (p.isPagado()) { // Si pagado == true
-                p.setMontoPagado(rs.getInt("monto_pagado"));
-            } else {            // Si pagado == false
-                p.setMontoPagado(rs.getInt("monto_cuota"));
+        List<Pago> lista = new ArrayList<>();
+        try {
+            Connection con = Conexion.getConexion();
+            // Unimos pago con cobros y cuotas para tener acceso tanto a lo pagado como al valor de la cuota original
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT p.id_pago, p.id_casa, p.id_cobro, p.monto_pagado, p.pagado, "
+                    + "c.monto as monto_cuota, ca.numero_casa, pr.nombre "
+                    + "FROM pago p "
+                    + "INNER JOIN cobros co ON p.id_cobro = co.id_cobro "
+                    + "INNER JOIN cuota c ON co.id_cuota = c.id_cuota "
+                    + "INNER JOIN casa ca ON p.id_casa = ca.id_casa "
+                    + "INNER JOIN propietario pr ON ca.id_propietario = pr.id_propietario "
+                    + "WHERE p.id_cobro = ?"
+            );
+            ps.setInt(1, idCobro);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Pago p = new Pago();
+                p.setIdPago(rs.getInt("id_pago"));
+                p.setIdCasa(rs.getInt("id_casa"));
+                p.setIdCobro(rs.getInt("id_cobro"));
+                p.setNumeroCasa(rs.getInt("numero_casa"));
+                p.setNombrePropietario(rs.getString("nombre"));
+                p.setPagado(rs.getBoolean("pagado"));
+
+                // Lógica de negocio
+                if (p.isPagado()) { // Si pagado == true
+                    p.setMontoPagado(rs.getInt("monto_pagado"));
+                } else {            // Si pagado == false
+                    p.setMontoPagado(rs.getInt("monto_cuota"));
+                }
+
+                lista.add(p);
             }
-            
-            lista.add(p);
+        } catch (SQLException e) {
+            System.out.println("Error en listarPagosPorCobro: " + e.getMessage());
         }
-    } catch (SQLException e) {
-        System.out.println("Error en listarPagosPorCobro: " + e.getMessage());
+        return lista;
     }
-    return lista;
-}
     public List<Pago> listarPagosPendientes(int idCasa) throws SQLException {
         List<Pago> lista = new ArrayList<>();
         try {
@@ -166,7 +170,7 @@ public class PagoDAO {
                 "FROM pago p " +
                 "INNER JOIN cobros co ON p.id_cobro = co.id_cobro " +
                 "INNER JOIN cuota c ON co.id_cuota = c.id_cuota " +
-                "WHERE p.id_casa = ? AND p.pagado = false " +
+                "WHERE p.id_casa = ? AND p.pagado = true " +
                 "UNION ALL " +
                 "SELECT p.id_pago, p.id_casa, p.id_cobro, p.id_cobro_casa, p.monto_pagado, p.pagado, cc.monto as monto_cuota " +
                 "FROM pago p " +
@@ -255,12 +259,12 @@ public class PagoDAO {
         try {
             Connection con = Conexion.getConexion();
             PreparedStatement ps = con.prepareStatement(
-                "SELECT p.id_pago, p.id_casa, c.numero_casa, " +
-                "pr.nombre, pr.telefono " +
-                "FROM pago p " +
-                "INNER JOIN casa c ON p.id_casa = c.id_casa " +
-                "INNER JOIN propietario pr ON c.id_propietario = pr.id_propietario " +
-                "WHERE p.id_cobro = ? AND p.pagado = false"
+                    "SELECT p.id_pago, p.id_casa, c.numero_casa, "
+                    + "pr.nombre, pr.telefono "
+                    + "FROM pago p "
+                    + "INNER JOIN casa c ON p.id_casa = c.id_casa "
+                    + "INNER JOIN propietario pr ON c.id_propietario = pr.id_propietario "
+                    + "WHERE p.id_cobro = ? AND p.pagado = false"
             );
             ps.setInt(1, idCobro);
             ResultSet rs = ps.executeQuery();
@@ -277,6 +281,27 @@ public class PagoDAO {
             System.out.println("Error: " + e.getMessage());
         }
         return lista;
+    }
+
+    public int totalPagadoAnioPorCasa(int idCasa, int anio) throws SQLException {
+        try {
+            Connection con = Conexion.getConexion();
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT SUM(p.monto_pagado) as total "
+                    + "FROM pago p "
+                    + "INNER JOIN cobros co ON p.id_cobro = co.id_cobro "
+                    + "WHERE p.id_casa = ? AND YEAR(co.fechaInicio) = ? AND p.pagado = true"
+            );
+            ps.setInt(1, idCasa);
+            ps.setInt(2, anio);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return 0;
     }
 }
 

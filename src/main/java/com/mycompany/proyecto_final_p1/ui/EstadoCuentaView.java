@@ -7,6 +7,9 @@ package com.mycompany.proyecto_final_p1.ui;
 import com.mycompany.proyecto_final_p1.model.Casa;
 import com.mycompany.proyecto_final_p1.util.CasaDAO;
 import com.mycompany.proyecto_final_p1.util.CuotaDAO;
+import com.mycompany.proyecto_final_p1.util.PagoDAO;
+import java.sql.SQLException;
+import java.util.Calendar;
 import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -45,6 +48,16 @@ private void cargarCasasComboBox() {
             javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar las casas: " + e.getMessage());
         }
     }
+    private void mostrarTotalPagado(int idCasa) {
+        try {
+            int anio = Calendar.getInstance().get(Calendar.YEAR);
+            PagoDAO dao = new PagoDAO();
+            int total = dao.totalPagadoAnioPorCasa(idCasa, anio);
+            lblTotalPagado.setText("Total pagado hasta la fecha: Q." + total);
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+    }
 
     private void cargarEstadoCuentaTabla(int idCasa) {
         String[] columnas = {"Año", "Mes", "Monto", "Monto Pagado", "Tipo", "Estado"};
@@ -56,6 +69,10 @@ private void cargarCasasComboBox() {
                 modelo.addRow(fila);
             }
             jTableEstadoCuenta.setModel(modelo);
+            int anio = Calendar.getInstance().get(Calendar.YEAR);
+            PagoDAO dao = new PagoDAO();
+            int total = dao.totalPagadoAnioPorCasa(idCasa, anio);
+            lblTotalPagado.setText("Q." + total);
         } catch (java.sql.SQLException e) {
             javax.swing.JOptionPane.showMessageDialog(this, "Error al llenar la tabla: " + e.getMessage());
         }
@@ -79,6 +96,8 @@ private void cargarCasasComboBox() {
         jComboBoxCasas = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        lblTotalPagado = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -133,18 +152,15 @@ private void cargarCasasComboBox() {
             }
         });
 
+        jLabel3.setText("TOTAL PAGADO:");
+
+        lblTotalPagado.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblTotalPagado.setText("jLabel4");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnDescargarPDF)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 197, Short.MAX_VALUE)
-                .addComponent(jComboBoxCasas, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(62, 62, 62))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
@@ -152,21 +168,39 @@ private void cargarCasasComboBox() {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(185, 185, 185))
+                .addGap(46, 46, 46)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jComboBoxCasas, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDescargarPDF)))
+                .addGap(62, 62, 62))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(168, 168, 168)
+                .addComponent(jLabel3)
+                .addGap(18, 18, 18)
+                .addComponent(lblTotalPagado, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 39, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(18, 18, 18)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnDescargarPDF)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(btnDescargarPDF)
+                            .addComponent(jLabel2))
+                        .addGap(25, 25, 25)
                         .addComponent(jComboBoxCasas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addGap(24, 24, 24)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblTotalPagado))
                 .addGap(19, 19, 19))
         );
 
@@ -181,7 +215,7 @@ private void cargarCasasComboBox() {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(17, 17, 17)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(16, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -347,6 +381,8 @@ private void cargarCasasComboBox() {
                         "Total pagado: Q" + totalPagado, fuenteNormal));
                 documento.add(new com.lowagie.text.Paragraph(
                         "Diferencia: Q" + (totalEsperado - totalPagado), fuenteNormal));
+                documento.add(new com.lowagie.text.Paragraph(
+                        "Total pagado hasta la fecha: " + lblTotalPagado.getText(), fuenteNormal));
 
                 JOptionPane.showMessageDialog(this, "¡PDF generado y guardado con éxito!");
 
@@ -409,9 +445,11 @@ private void cargarCasasComboBox() {
     private javax.swing.JComboBox<String> jComboBoxCasas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTableEstadoCuenta;
+    private javax.swing.JLabel lblTotalPagado;
     // End of variables declaration//GEN-END:variables
 }
