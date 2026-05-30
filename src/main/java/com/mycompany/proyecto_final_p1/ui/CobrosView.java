@@ -380,6 +380,13 @@ public class CobrosView extends javax.swing.JFrame {
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            if (jCalendarInicio.getDate().after(jCalendarLimite.getDate())) {
+                JOptionPane.showMessageDialog(this,
+                    "La fecha de inicio no puede ser mayor a la fecha límite.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
             try {
                 //evita saltarse meses para asegurar el orden de los pagos
@@ -433,79 +440,78 @@ public class CobrosView extends javax.swing.JFrame {
     }//GEN-LAST:event_DescripciondosActionPerformed
 
     private void buttoncobrardosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttoncobrardosActionPerformed
-
         try {
+            // Validar campos vacíos
+            if (Descripciondos.getText().isEmpty() || Monto.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null,
+                        "Por favor completa todos los campos.",
+                        "Aviso",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-            CobroindividualDAO cobrar
-                    = new CobroindividualDAO();
+            // Validar que monto sea número entero
+            int monto;
+            try {
+                monto = Integer.parseInt(Monto.getText().trim());
+                if (monto <= 0) {
+                    JOptionPane.showMessageDialog(null,
+                            "El monto debe ser mayor a 0.",
+                            "Aviso",
+                            JOptionPane.WARNING_MESSAGE);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null,
+                        "El monto debe ser un número entero válido.",
+                        "Aviso",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-            Cobroindividual cobro
-                    = new Cobroindividual();
+            // Validar fechas
+            if (Dateinicio.getDate() == null || Datefin.getDate() == null) {
+                JOptionPane.showMessageDialog(null,
+                        "Por favor selecciona las fechas.",
+                        "Aviso",
+                        JOptionPane.WARNING_MESSAGE);
+                return;
+            }
 
-            String tipo = JComboboxTipoPago
-                    .getSelectedItem()
-                    .toString();
+            if (Dateinicio.getDate().after(Datefin.getDate())) {
+                JOptionPane.showMessageDialog(null,
+                        "La fecha de inicio no puede ser mayor a la fecha límite.",
+                        "Error",
+                        JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            CobroindividualDAO cobrar = new CobroindividualDAO();
+            Cobroindividual cobro = new Cobroindividual();
+
+            String tipo = JComboboxTipoPago.getSelectedItem().toString();
             cobro.setTipo_cobro(tipo);
 
             int indice = comboboxcasa.getSelectedIndex();
-
             Cobroindividual casaSeleccionada = listaCasas.get(indice);
-
-            cobro.setId_casa(
-                    casaSeleccionada.getId_casa()
-            );
-
-            cobro.setDescripcion(
-                    Descripciondos.getText()
-            );
-
-            cobro.setMonto(
-                    Integer.parseInt(
-                            Monto.getText()
-                    )
-            );
-
-            cobro.setFechaInicio(
-                    new java.sql.Date(
-                            Dateinicio
-                                    .getDate()
-                                    .getTime()
-                    )
-            );
-
-            cobro.setFechaLimite(
-                    new java.sql.Date(
-                            Datefin
-                                    .getDate()
-                                    .getTime()
-                    )
-            );
-
-            System.out.println(
-                    "ID CASA: "
-                    + casaSeleccionada.getId_casa());
+            cobro.setId_casa(casaSeleccionada.getId_casa());
+            cobro.setDescripcion(Descripciondos.getText());
+            cobro.setMonto(monto);
+            cobro.setFechaInicio(new java.sql.Date(Dateinicio.getDate().getTime()));
+            cobro.setFechaLimite(new java.sql.Date(Datefin.getDate().getTime()));
 
             boolean guardado = cobrar.insertarCobro(cobro);
             if (guardado) {
-
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Cobro guardado"
-                );
-
+                JOptionPane.showMessageDialog(null, "Cobro guardado exitosamente!");
+                limpiarCamposDos();
             } else {
-
-                JOptionPane.showMessageDialog(
-                        null,
-                        "No se pudo guardar");
+                JOptionPane.showMessageDialog(null, "No se pudo guardar el cobro.",
+                        "Error", JOptionPane.ERROR_MESSAGE);
             }
+
         } catch (Exception e) {
-
-            JOptionPane.showMessageDialog(
-                    null,
-                    e.getMessage()
-            );
-
+            JOptionPane.showMessageDialog(null, "Error: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_buttoncobrardosActionPerformed
 

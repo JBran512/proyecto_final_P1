@@ -35,6 +35,7 @@ public class IngresarCasaDialog extends javax.swing.JDialog {
         cargarCondominios();
     }
     private void cargarPropietarios() {
+        cmbPropietario.removeAllItems();
         PropietarioDAO dao = new PropietarioDAO();
         listaPropietarios = dao.listarTodos();
         for (Propietario p : listaPropietarios) {
@@ -43,6 +44,7 @@ public class IngresarCasaDialog extends javax.swing.JDialog {
     }
     private void cargarCondominios() {
         try {
+            cmbCondominio.removeAllItems();
             CondominioDAO dao = new CondominioDAO();
             listaCondominios = dao.listarTodos();
             for (Condominio c : listaCondominios) {
@@ -96,6 +98,7 @@ public class IngresarCasaDialog extends javax.swing.JDialog {
         jButton2.setBackground(new java.awt.Color(204, 0, 0));
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("CANCELAR");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         cmbPropietario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -233,6 +236,10 @@ public class IngresarCasaDialog extends javax.swing.JDialog {
             System.out.println("Error: " + e.getMessage());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
